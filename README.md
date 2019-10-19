@@ -14,8 +14,10 @@ Web application that provides easy scheduling and visual overviews of trips.  Pr
     * [Debian / Ubuntu](#debian--ubuntu)
     * [Arch Linux](#arch-linux)
     * [MacOS](#macos)
+    * [Windows](#windows)
   * [Installation](#installation)
   * [Running](#running)
+  * [Contributing](#contributing)
 
 ## Overview
 
@@ -70,6 +72,11 @@ yay nodejs yarn
 brew install node yarn
 ```
 
+### Windows
+
+Enable the [Windows Subsystem for Linux][WSL], install Ubuntu (or your preferred
+distro), then follow the steps listed above.
+
 ## Installation
 
 ```bash
@@ -98,10 +105,16 @@ yarn start
 yarn run build
 ```
 
+## Contributing
+
+Follow [Conventional Commits].
+
 [Ant Design]: https://ant.design/
+[Conventional Commits]: https://www.conventionalcommits.org/en/v1.0.0/
 [Koa]: https://github.com/koajs/koa
 [Node.js]: https://nodejs.org/en/
 [NVM]: https://github.com/nvm-sh/nvm
 [React]: https://reactjs.org/
 [TypeScript]: https://www.typescriptlang.org/
+[WSL]: https://docs.microsoft.com/en-us/windows/wsl/install-win10
 [Yarn]: https://yarnpkg.com/lang/en/
