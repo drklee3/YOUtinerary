@@ -10,6 +10,7 @@
     "dev": "concurrently \"tsc -w\" \"nodemon dist/index.js\""
   },
   "dependencies": {
+    "googleapis": "^44.0.0",
     "koa": "^2.10.0"
   },
   "devDependencies": {

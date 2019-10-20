@@ -5,6 +5,7 @@
   "version": "0.1.0",
   "author": "Derrick Lee <derrick@dlee.dev",
   "dependencies": {
+    "antd": "^3.24.2",
     "gatsby": "^2.16.1",
     "gatsby-image": "^2.2.29",
     "gatsby-plugin-manifest": "^2.2.23",
@@ -20,7 +21,9 @@
     "react-helmet": "^5.2.1"
   },
   "devDependencies": {
-    "prettier": "^1.18.2"
+    "jest": "^24.9.0",
+    "prettier": "^1.18.2",
+    "tslint": "^5.20.0"
   },
   "keywords": [
     "gatsby"
