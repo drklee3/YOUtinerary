@@ -94,14 +94,18 @@ yarn
 
 ## Running
 
+Running the front and back end use the same Yarn commands.
+
 ```bash
+# First cd into api or web
+
 # Run for developing with automatic code reloading
 yarn run dev
 
 # Run for production
 yarn start
 
-# Only build TypeScript
+# Only build TypeScript (dev and start commands also build before running)
 yarn run build
 ```
 
