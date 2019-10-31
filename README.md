@@ -1,23 +1,21 @@
-# YOUtinerary
+# YOUtinerary <!-- omit in toc -->
 
 Web application that provides easy scheduling and visual overviews of trips.  Project for CSCI 187: Design and Management of Software at SCU.
 
-## Table of Contents
+## Table of Contents <!-- omit in toc -->
 
-* [YOUtinerary](#youtinerary)
-  * [Table of Contents](#table-of-contents)
-  * [Overview](#overview)
-    * [Stack](#stack)
-      * [Front end](#front-end)
-      * [Back End](#back-end)
-  * [Dependencies](#dependencies)
-    * [Debian / Ubuntu](#debian--ubuntu)
-    * [Arch Linux](#arch-linux)
-    * [MacOS](#macos)
-    * [Windows](#windows)
-  * [Installation](#installation)
-  * [Running](#running)
-  * [Contributing](#contributing)
+* [Overview](#overview)
+  * [Stack](#stack)
+    * [Front end](#front-end)
+    * [Back End](#back-end)
+* [Dependencies](#dependencies)
+  * [Debian / Ubuntu](#debian--ubuntu)
+  * [Arch Linux](#arch-linux)
+  * [MacOS](#macos)
+  * [Windows](#windows)
+* [Installation](#installation)
+* [Running](#running)
+* [Contributing](#contributing)
 
 ## Overview
 
