@@ -24,6 +24,6 @@
     "jest": "^24.9.0",
     "nodemon": "^1.19.3",
     "tslint": "^5.20.0",
-    "typescript": "^3.6.4"
+    "typescript": "^3.7.2"
   }
 }
