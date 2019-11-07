@@ -84,7 +84,11 @@ git clone git@github.com:drklee3/YOUtinerary.git
 # Or with HTTPS
 git clone https://github.com/drklee3/YOUtinerary.git
 
-cd YOUtinerary/server
+# Change to api directory
+cd YOUtinerary/api
+
+# Or change to web directory
+cd YOUtinerary/web
 
 # Install node dependencies
 yarn
