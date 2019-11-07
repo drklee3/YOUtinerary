@@ -22,7 +22,7 @@
     "@types/koa-router": "^7.0.42",
     "concurrently": "^5.0.0",
     "jest": "^24.9.0",
-    "nodemon": "^1.19.3",
+    "nodemon": "^1.19.4",
     "tslint": "^5.20.0",
     "typescript": "^3.6.4"
   }
