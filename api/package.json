@@ -11,11 +11,15 @@
     "start": "yarn run build && node dist/index.js"
   },
   "dependencies": {
+    "@koa/router": "^8.0.2",
     "googleapis": "^44.0.0",
-    "koa": "^2.10.0"
+    "koa": "^2.10.0",
+    "koa-bodyparser": "^4.2.1"
   },
   "devDependencies": {
     "@types/koa": "^2.0.50",
+    "@types/koa-bodyparser": "^4.3.0",
+    "@types/koa-router": "^7.0.42",
     "concurrently": "^5.0.0",
     "jest": "^24.9.0",
     "nodemon": "^1.19.3",
