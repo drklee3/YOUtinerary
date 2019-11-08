@@ -1,6 +1,7 @@
 # YOUtinerary <!-- omit in toc -->
 
-Web application that provides easy scheduling and visual overviews of trips.  Project for CSCI 187: Design and Management of Software at SCU.
+Web application that provides easy scheduling and visual overviews of trips.
+Project for CSCI 187: Design and Management of Software at SCU.
 
 ## Table of Contents <!-- omit in toc -->
 
@@ -21,7 +22,8 @@ Web application that provides easy scheduling and visual overviews of trips.  Pr
 
 ### Stack
 
-[TypeScript], [Node.js]
+[TypeScript] and [Node.js].  [Yarn Workspaces] is used to install all node
+dependencies at once.
 
 #### Front end
 
@@ -84,23 +86,28 @@ git clone git@github.com:drklee3/YOUtinerary.git
 # Or with HTTPS
 git clone https://github.com/drklee3/YOUtinerary.git
 
-# Change to api directory
-cd YOUtinerary/api
+# Change to YOUtinerary directory
+cd YOUtinerary
 
-# Or change to web directory
-cd YOUtinerary/web
-
-# Install node dependencies
+# Install node dependencies for all packages
 yarn
 ```
 
 ## Running
 
-Running the front and back end use the same Yarn commands.
+To run packages from the root directory:
 
 ```bash
-# First cd into api or web
+yarn run web:dev
+yarn run api:dev
+```
 
+If you want to run packages within their respective directories, first `cd` into
+the package directory then run the following commands.
+
+**Note:** Running the front and back end use the same Yarn commands.
+
+```bash
 # Run for developing with automatic code reloading
 yarn run dev
 
@@ -124,3 +131,4 @@ Follow [Conventional Commits].
 [TypeScript]: https://www.typescriptlang.org/
 [WSL]: https://docs.microsoft.com/en-us/windows/wsl/install-win10
 [Yarn]: https://yarnpkg.com/lang/en/
+[Yarn Workspaces]: https://yarnpkg.com/lang/en/docs/workspaces/
