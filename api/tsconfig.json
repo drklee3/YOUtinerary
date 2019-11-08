@@ -1,22 +1,12 @@
 {
+    "extends": "../tsconfig.json",
     "compilerOptions": {
-        "allowJs": true,
-        "allowSyntheticDefaultImports": true,
-        "baseUrl": ".",
-        "esModuleInterop": true,
-        "importHelpers": true,
-        "lib": ["es7", "esnext", "dom"],
-        "moduleResolution": "node",
-        "noImplicitAny": true,
-        "noUnusedLocals": true,
         "outDir": "./dist",
-        "skipLibCheck": true,
-        "strict": true,
-        "strictNullChecks": true,
-        "target": "es5"
+        "baseUrl": ".",
+        "typeRoots": [
+            "../node_modules/@types",
+        ],
     },
-    "include": [
-        "./src/**/*"
-    ],
+    "include": ["src", "test"],
     "exclude": ["node_modules"]
 }
