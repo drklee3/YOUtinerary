@@ -1,5 +1,5 @@
 import Koa        from "koa";
-import Router     from "koa-router";
+import Router     from "@koa/router";
 import bodyParser from "koa-bodyparser";
 
 import {searchLocation, searchRoute} from "./search";
