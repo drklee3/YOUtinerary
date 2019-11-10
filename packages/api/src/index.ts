@@ -1,6 +1,7 @@
 import Koa from "koa";
 import Router from "@koa/router";
 import bodyParser from "koa-bodyparser";
+import Config from "./config";
 
 import { searchLocation, searchRoute } from "./search";
 
@@ -10,7 +11,7 @@ const router = new Router();
 const koaInterface = process.env.interface || "127.0.0.1";
 const koaPort = parseInt(process.env.port || "3000");
 
-async function main() {
+function main(): void {
     router.get("/", (ctx) => {
         ctx.body = "Hello Koa";
     });
@@ -45,4 +46,5 @@ async function main() {
     });
 }
 
+Config.validOrExit();
 main();
