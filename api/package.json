@@ -1,5 +1,5 @@
 {
-  "name": "youtinerary-api",
+  "name": "@youtinerary/api",
   "version": "1.0.0",
   "description": "Backend API server for YOUtinerary",
   "repository": "https://github.com/drklee3/YOUtinerary.git",

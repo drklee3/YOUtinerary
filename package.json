@@ -2,10 +2,13 @@
     "private": true,
     "workspaces": ["api", "web"],
     "scripts": {
-        "api:dev": "yarn workspace youtinerary-api run dev",
-        "web:dev": "yarn workspace youtinerary-web run dev",
-        "api:start": "yarn workspace youtinerary-api run start",
-        "web:start": "yarn workspace youtinerary-web run start",
+        "api:dev": "yarn workspace @youtinerary/api run dev",
+        "web:dev": "yarn workspace @youtinerary/web run dev",
+        "api:start": "yarn workspace @youtinerary/api run start",
+        "web:start": "yarn workspace @youtinerary/web run start",
+        "api:build": "yarn workspace @youtinerary/api run build",
+        "web:build": "yarn workspace @youtinerary/web run build",
+        "build": "yarn workspaces run build",
         "test": "yarn workspaces run test"
     }
 }
