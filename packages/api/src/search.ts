@@ -11,7 +11,7 @@ export interface Route {
 export function searchLocation(query: string): SearchResult | undefined {
     // TODO(Zack): Search for business, location, etc via Google Maps Places API
     // https://developers.google.com/places/web-service/intro
-    
+
     return; // SearchResult
 }
 
@@ -20,4 +20,3 @@ export function searchRoute(query: string): Route | undefined {
     // https://developers.google.com/maps/documentation/
     return;
 }
-

@@ -1,4 +1,5 @@
 import React from "react"
+import "antd/dist/antd.css"
 import { Link } from "gatsby"
 
 import Layout from "../components/layout"

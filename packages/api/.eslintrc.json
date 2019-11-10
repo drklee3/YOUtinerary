@@ -1,0 +1,3 @@
+{
+    "extends": ["@youtinerary/typescript/.eslint.json"]
+}
