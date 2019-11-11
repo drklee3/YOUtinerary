@@ -21,6 +21,10 @@
     "react-helmet": "^5.2.1"
   },
   "devDependencies": {
+    "@types/react": "^16.9.11",
+    "@types/react-dom": "^16.9.4",
+    "@types/react-helmet": "^5.0.14",
+    "@youtinerary/typescript": "^0.1.0",
     "gatsby-plugin-eslint": "^2.0.8",
     "jest": "^24.9.0",
     "prettier": "^1.18.2",

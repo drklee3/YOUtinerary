@@ -1,5 +1,6 @@
 {
     "extends": [
+        "plugin:react/recommended",
         "plugin:@typescript-eslint/recommended",
         "prettier",
         "prettier/@typescript-eslint"
@@ -9,7 +10,14 @@
     "rules": {
         "@typescript-eslint/no-unused-vars": [
             "warn",
-            { "varsIgnorePattern": "^_|^React$" }
+            { "varsIgnorePattern": "^_.*|^React$" }
+        ],
+        "@typescript-eslint/explicit-function-return-type": [
+            "warn",
+            {
+                "allowExpressions": true,
+                "allowTypedFunctionExpressions": true
+            }
         ]
     }
 }

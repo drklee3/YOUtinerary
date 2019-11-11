@@ -9,14 +9,18 @@ import React from "react";
 import Nav from "./Nav";
 import PropTypes from "prop-types";
 import { useStaticQuery, graphql } from "gatsby";
-import { Layout as AntdLayout, Menu } from "antd";
+import { Layout as AntdLayout } from "antd";
 
 import "./layout.css";
 
 const { Header, Content, Footer } = AntdLayout;
 
-const Layout = ({ children }) => {
-    const _data = useStaticQuery(graphql`
+interface Props {
+    children: JSX.Element[] | JSX.Element;
+}
+
+const Layout = ({ children }: Props): JSX.Element => {
+    const data = useStaticQuery(graphql`
         query SiteTitleQuery {
             site {
                 siteMetadata {
@@ -44,7 +48,7 @@ const Layout = ({ children }) => {
                     </div>
                 </Content>
                 <Footer style={{ textAlign: "center" }}>
-                    Ant Design ©2018 Created by Ant UED
+                    {data.title} ©2018 Created by Ant UED
                 </Footer>
                 <footer>
                     © {new Date().getFullYear()}, Built with
