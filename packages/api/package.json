@@ -9,7 +9,7 @@
         "build": "tsc",
         "dev": "concurrently \"tsc -w\" \"nodemon dist/index.js\"",
         "start": "yarn run build && node dist/index.js",
-        "test": "echo \"No tests yet! :( \""
+        "test": "jest --coverage"
     },
     "dependencies": {
         "@google/maps": "^1.0.2",

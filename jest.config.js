@@ -6,4 +6,9 @@ module.exports = {
         "\\.(ts|tsx)$": "ts-jest",
         "^.+\\.jsx?$": "babel-jest",
     },
+    globals: {
+        "ts-jest": {
+            tsConfig: "packages/typescript/tsconfig.json",
+        },
+    },
 };
