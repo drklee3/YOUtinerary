@@ -25,10 +25,7 @@
     "@types/react-dom": "^16.9.4",
     "@types/react-helmet": "^5.0.14",
     "@youtinerary/typescript": "^0.1.0",
-    "gatsby-plugin-eslint": "^2.0.8",
-    "jest": "^24.9.0",
-    "prettier": "^1.18.2",
-    "tslint": "^5.20.0"
+    "gatsby-plugin-eslint": "^2.0.8"
   },
   "keywords": [
     "gatsby"
@@ -40,7 +37,7 @@
     "format": "prettier --write \"**/*.{js,jsx,json,md}\"",
     "start": "yarn run dev",
     "serve": "gatsby serve",
-    "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing \""
+    "test": "jest"
   },
   "repository": "https://github.com/drklee3/YOUtinerary.git"
 }
