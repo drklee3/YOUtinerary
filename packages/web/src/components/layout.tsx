@@ -5,13 +5,11 @@
  * See: https://www.gatsbyjs.org/docs/use-static-query/
  */
 
+import { Button, Layout as AntdLayout, Menu, Typography } from "antd";
+import { graphql, navigate, useStaticQuery } from "gatsby";
 import React from "react";
-import Nav from "./Nav";
-import PropTypes from "prop-types";
-import { useStaticQuery, graphql } from "gatsby";
-import { Layout as AntdLayout } from "antd";
 
-import "./layout.css";
+const { Text } = Typography;
 
 const { Header, Content, Footer } = AntdLayout;
 
@@ -31,37 +29,74 @@ const Layout = ({ children }: Props): JSX.Element => {
     `);
 
     return (
-        <>
-            <AntdLayout className="layout">
-                <Header>
-                    <Nav />
-                </Header>
-                <Content style={{ padding: "0 50px" }}>
-                    <div
-                        style={{
-                            background: "#fff",
-                            padding: 24,
-                            minHeight: 280,
-                        }}
+        <AntdLayout
+            className="layout"
+            style={{ background: "none", height: "100vh", width: "100vw" }}
+        >
+            <Header
+                style={{
+                    background: "none",
+                    width: "100%",
+                    margin: "auto",
+                    padding: "0",
+                }}
+            >
+                <div className="logo" />
+                <Menu
+                    theme="light"
+                    mode="horizontal"
+                    defaultSelectedKeys={["1"]}
+                    style={{
+                        lineHeight: "64px",
+                    }}
+                >
+                    <Menu.Item
+                        key="1"
+                        style={{ float: "left", border: "none" }}
+                        onClick={() => navigate("/")}
                     >
-                        {children}
-                    </div>
-                </Content>
-                <Footer style={{ textAlign: "center" }}>
-                    {data.title} ©2018 Created by Ant UED
-                </Footer>
-                <footer>
-                    © {new Date().getFullYear()}, Built with
-                    {` `}
-                    <a href="https://www.gatsbyjs.org">Gatsby</a>
-                </footer>
-            </AntdLayout>
-        </>
+                        <b>YOUtinerary</b>
+                    </Menu.Item>
+                    <Menu.Item
+                        key="3"
+                        style={{ float: "right", border: "none" }}
+                        onClick={() => navigate("/plan")}
+                    >
+                        <Button type="primary" shape="round" size="large">
+                            Plan A Trip
+                        </Button>
+                    </Menu.Item>
+                    <Menu.Item key="2" style={{ float: "right" }}>
+                        About
+                    </Menu.Item>
+                </Menu>
+            </Header>
+            <Content style={{ height: "100%" }}>{children}</Content>
+            <Footer>
+                {data.title}
+                <Text strong>
+                    <a
+                        href="https://github.com/drklee3/YOUtinerary"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        drklee3/YOUtinerary
+                    </a>
+                </Text>
+                <br />
+                <Text>
+                    Source code licensed{" "}
+                    <a
+                        href="https://opensource.org/licenses/mit-license.php"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        MIT
+                    </a>
+                </Text>
+            </Footer>
+        </AntdLayout>
     );
-};
-
-Layout.propTypes = {
-    children: PropTypes.node.isRequired,
 };
 
 export default Layout;

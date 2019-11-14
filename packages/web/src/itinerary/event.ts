@@ -1,4 +1,4 @@
-export default class Event {
+export class Event {
     private _id: number;
     private _name: string;
     private _start: Date;
@@ -50,3 +50,5 @@ export default class Event {
         return this._end.getTime() - this._start.getTime();
     }
 }
+
+export default Event;
