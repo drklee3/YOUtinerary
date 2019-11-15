@@ -6,7 +6,7 @@
   "author": "Derrick Lee <derrick@dlee.dev",
   "dependencies": {
     "antd": "^3.25.1",
-    "gatsby": "^2.17.13",
+    "gatsby": "^2.17.14",
     "gatsby-image": "^2.2.33",
     "gatsby-plugin-manifest": "^2.2.27",
     "gatsby-plugin-offline": "^3.0.20",
