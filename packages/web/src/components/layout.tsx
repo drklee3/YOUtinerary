@@ -5,9 +5,11 @@
  * See: https://www.gatsbyjs.org/docs/use-static-query/
  */
 
-import { Button, Layout as AntdLayout, Menu, Typography } from "antd";
-import { graphql, navigate, useStaticQuery } from "gatsby";
+import { Layout as AntdLayout, Typography } from "antd";
+import { graphql, useStaticQuery } from "gatsby";
 import React from "react";
+import "../styles/style.less";
+import Nav from "./Nav";
 
 const { Text } = Typography;
 
@@ -42,34 +44,7 @@ const Layout = ({ children }: Props): JSX.Element => {
                 }}
             >
                 <div className="logo" />
-                <Menu
-                    theme="light"
-                    mode="horizontal"
-                    defaultSelectedKeys={["1"]}
-                    style={{
-                        lineHeight: "64px",
-                    }}
-                >
-                    <Menu.Item
-                        key="1"
-                        style={{ float: "left", border: "none" }}
-                        onClick={() => navigate("/")}
-                    >
-                        <b>YOUtinerary</b>
-                    </Menu.Item>
-                    <Menu.Item
-                        key="3"
-                        style={{ float: "right", border: "none" }}
-                        onClick={() => navigate("/plan")}
-                    >
-                        <Button type="primary" shape="round" size="large">
-                            Plan A Trip
-                        </Button>
-                    </Menu.Item>
-                    <Menu.Item key="2" style={{ float: "right" }}>
-                        About
-                    </Menu.Item>
-                </Menu>
+                <Nav />
             </Header>
             <Content style={{ height: "100%" }}>{children}</Content>
             <Footer>

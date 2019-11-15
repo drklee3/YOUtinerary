@@ -1,6 +1,6 @@
-import { Menu } from "antd";
+import { Button, Menu } from "antd";
 import { ClickParam } from "antd/lib/menu";
-import { Link } from "gatsby";
+import { navigate } from "gatsby";
 import React from "react";
 
 class Nav extends React.Component {
@@ -15,16 +15,34 @@ class Nav extends React.Component {
         });
     };
 
-    render() {
+    render(): JSX.Element {
         return (
             <Menu
-                theme="dark"
-                onClick={this.handleClick}
-                selectedKeys={[this.state.current]}
+                theme="light"
                 mode="horizontal"
+                defaultSelectedKeys={["1"]}
+                style={{
+                    lineHeight: "64px",
+                }}
             >
-                <Menu.Item key="home">
-                    <Link to="/">Home</Link>
+                <Menu.Item
+                    key="1"
+                    style={{ float: "left", border: "none" }}
+                    onClick={() => navigate("/")}
+                >
+                    <b>YOUtinerary</b>
+                </Menu.Item>
+                <Menu.Item
+                    key="3"
+                    style={{ float: "right", border: "none" }}
+                    onClick={() => navigate("/plan")}
+                >
+                    <Button type="primary" shape="round" size="large">
+                        Plan A Trip
+                    </Button>
+                </Menu.Item>
+                <Menu.Item key="2" style={{ float: "right" }}>
+                    About
                 </Menu.Item>
             </Menu>
         );

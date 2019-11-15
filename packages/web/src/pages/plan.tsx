@@ -1,5 +1,4 @@
 import { Col, Row } from "antd";
-import "antd/dist/antd.css";
 import React from "react";
 import Layout from "../components/layout";
 import Plan from "../components/Plan";

@@ -1,5 +1,4 @@
 import { Button, Col, Icon, Row, Typography } from "antd";
-import "antd/dist/antd.css";
 import { Link } from "gatsby";
 import React from "react";
 import Layout from "../components/layout";
