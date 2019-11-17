@@ -3,11 +3,11 @@ import { ClickParam } from "antd/lib/menu";
 import { navigate } from "gatsby";
 import React from "react";
 
-class Nav extends React.Component {
-    state = {
-        current: "mail",
-    };
+interface Props {
+    location?: string;
+}
 
+class Nav extends React.Component<Props> {
     handleClick = (e: ClickParam): void => {
         console.log("click ", e);
         this.setState({
@@ -16,24 +16,27 @@ class Nav extends React.Component {
     };
 
     render(): JSX.Element {
+        const { location = "/" } = this.props;
+        console.log(this.props);
+
         return (
             <Menu
                 theme="light"
                 mode="horizontal"
-                defaultSelectedKeys={["1"]}
+                selectedKeys={[location]}
                 style={{
                     lineHeight: "64px",
                 }}
             >
                 <Menu.Item
-                    key="1"
+                    key="/"
                     style={{ float: "left", border: "none" }}
                     onClick={() => navigate("/")}
                 >
                     <b>YOUtinerary</b>
                 </Menu.Item>
                 <Menu.Item
-                    key="3"
+                    key="/plan"
                     style={{ float: "right", border: "none" }}
                     onClick={() => navigate("/plan")}
                 >
@@ -41,7 +44,11 @@ class Nav extends React.Component {
                         Plan A Trip
                     </Button>
                 </Menu.Item>
-                <Menu.Item key="2" style={{ float: "right" }}>
+                <Menu.Item
+                    key="/about"
+                    style={{ float: "right" }}
+                    onClick={() => navigate("/about")}
+                >
                     About
                 </Menu.Item>
             </Menu>

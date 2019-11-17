@@ -5,20 +5,21 @@ import Plan from "../components/Plan";
 import SEO from "../components/seo";
 
 const IndexPage = (): JSX.Element => (
-    <Layout>
+    <Layout location="/plan">
         <SEO title="Plan" />
         <Row
             type="flex"
             justify="space-around"
             style={{
                 height: "100%",
-                padding: "0 20px",
             }}
         >
-            <Col span={12}>
+            <Col sm={24} md={12}>
                 <Plan />
             </Col>
-            <Col span={12}>map</Col>
+            <Col sm={24} md={12}>
+                map
+            </Col>
         </Row>
     </Layout>
 );

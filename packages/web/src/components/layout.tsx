@@ -17,9 +17,10 @@ const { Header, Content, Footer } = AntdLayout;
 
 interface Props {
     children: JSX.Element[] | JSX.Element;
+    location?: string;
 }
 
-const Layout = ({ children }: Props): JSX.Element => {
+const Layout = ({ children, location }: Props): JSX.Element => {
     const data = useStaticQuery(graphql`
         query SiteTitleQuery {
             site {
@@ -44,7 +45,7 @@ const Layout = ({ children }: Props): JSX.Element => {
                 }}
             >
                 <div className="logo" />
-                <Nav />
+                <Nav location={location} />
             </Header>
             <Content style={{ height: "100%" }}>{children}</Content>
             <Footer>
