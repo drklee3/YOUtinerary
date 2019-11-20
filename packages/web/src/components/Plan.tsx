@@ -3,7 +3,7 @@ import React from "react";
 import { Event as EventData } from "../itinerary/event";
 import Event from "./Event";
 
-const { Paragraph, Title } = Typography;
+const { Title } = Typography;
 
 interface State {
     title: string;
