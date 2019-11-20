@@ -11,19 +11,20 @@
         "api:build": "yarn workspace @youtinerary/api run build",
         "web:build": "yarn workspace @youtinerary/web run build",
         "build": "yarn workspaces run build",
-        "test": "jest --coverage"
+        "test": "jest --coverage",
+        "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s && git add CHANGELOG.md"
     },
     "devDependencies": {
         "@types/jest": "^24.0.23",
         "codecov": "^3.6.1",
         "concurrently": "^5.0.0",
+        "conventional-changelog-cli": "^2.0.28",
         "eslint": "^6.6.0",
-        "husky": "^3.0.9",
+        "husky": "^3.1.0",
         "jest": "^24.9.0",
         "nodemon": "^1.19.4",
         "prettier": "^1.19.1",
         "pretty-quick": "^2.0.1",
-        "standard-version": "^7.0.0",
         "ts-jest": "^24.1.0",
         "typescript": "^3.7.2"
     },
