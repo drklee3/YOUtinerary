@@ -73,10 +73,9 @@ export default class Plan {
      * Updates an existing event with modified values
      */
     public editEvent(id: number, newEvent: Event) {
-        for (const item in this._events) {
-            if (this._events[item].id == id) {
-                this._events[item] = newEvent;
-            }
+        for (let counter = 0; counter < this._events.length; counter++) {
+            const result = this._events.splice(counter, 1, newEvent);
+            return result;
         }
     }
 }
