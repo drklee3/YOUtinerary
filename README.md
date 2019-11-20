@@ -8,6 +8,8 @@
 Web application that provides easy scheduling and visual overviews of trips.
 Project for CSCI 187: Design and Management of Software at SCU.
 
+Please refer to the [wiki] for more documentation.
+
 ## Table of Contents <!-- omit in toc -->
 
 -   [Overview](#overview)
@@ -147,6 +149,7 @@ Follow [Conventional Commits].
 [nvm]: https://github.com/nvm-sh/nvm
 [react]: https://reactjs.org/
 [typescript]: https://www.typescriptlang.org/
+[wiki]: https://github.com/drklee3/YOUtinerary/wiki
 [wsl]: https://docs.microsoft.com/en-us/windows/wsl/install-win10
 [yarn]: https://yarnpkg.com/lang/en/
 [yarn workspaces]: https://yarnpkg.com/lang/en/docs/workspaces/
