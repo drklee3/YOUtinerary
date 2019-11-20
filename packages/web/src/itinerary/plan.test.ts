@@ -29,6 +29,20 @@ describe("plan", () => {
         expect(plan.allEvents[0]).toEqual(event);
     });
 
+    it("should get single event", () => {
+        const plan = new Plan("getter");
+        const event = new Event(1, "event name", yesterday, now);
+        const event2 = new Event(2, "wee", yesterday, now);
+        const event3 = new Event(3, "woo", yesterday, now);
+
+        plan.addEvent(event);
+        plan.addEvent(event2);
+        plan.addEvent(event3);
+
+        const result = plan.getEvent(1);
+        expect(result).toBe(event);
+    });
+
     it("should remove the event", () => {
         const plan = new Plan("remover");
         const event = new Event(1, "event name", yesterday, now);

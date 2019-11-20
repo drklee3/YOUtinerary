@@ -51,10 +51,9 @@ export default class Plan {
      * Gets a single event
      */
     public getEvent(id: number): Event {
-        for (const item in this._events) {
-            if (this._events[item].id == id) {
-                return this._events[item];
-            }
+        for (let counter = 0; counter < this._events.length; counter++) {
+            const result = this._events.filter((item) => item.id == id)[0];
+            return result;
         }
         throw new Error("Event cannot be Found");
     }
