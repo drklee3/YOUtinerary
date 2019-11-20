@@ -40,7 +40,9 @@ export default class Plan {
      * Adds a single event, returns true if successful
      */
     public addEvent(event: Event): boolean {
-        // TODO(Eric): Complete addEvent
+        if (this._events.includes(event)) {
+            return false;
+        }
         this._events.push(event);
         return true;
     }
@@ -49,7 +51,6 @@ export default class Plan {
      * Gets a single event
      */
     public getEvent(id: number): Event {
-        // TODO(Eric): Complete
         for (const item in this._events) {
             if (this._events[item].id == id) {
                 return this._events[item];
@@ -62,19 +63,17 @@ export default class Plan {
      * Removes a single event
      */
     public removeEvent(id: number) {
-        // TODO(Eric): Complete removeEvent
-        for (const item in this._events) {
-            if (this._events[item].id == id) {
-                delete this._events[item];
+        this._events.forEach((item, index) => {
+            if (item.id == id) {
+                return this._events.splice(index, 1);
             }
-        }
+        });
     }
 
     /**
      * Updates an existing event with modified values
      */
     public editEvent(id: number, newEvent: Event) {
-        // TODO(Eric): Complete
         for (const item in this._events) {
             if (this._events[item].id == id) {
                 this._events[item] = newEvent;
