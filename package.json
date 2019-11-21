@@ -12,6 +12,7 @@
         "web:build": "yarn workspace @youtinerary/web run build",
         "build": "yarn workspaces run build",
         "test": "jest --coverage",
+        "lint": "eslint -c packages/typescript/.eslintrc.json **/src/**/*.ts",
         "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s && git add CHANGELOG.md"
     },
     "devDependencies": {
