@@ -18,7 +18,8 @@
                 "allowExpressions": true,
                 "allowTypedFunctionExpressions": true
             }
-        ]
+        ],
+        "@typescript-eslint/no-non-null-assertion": ["off"]
     },
     "settings": {
         "react": {
