@@ -8,6 +8,7 @@
     "antd": "^3.25.2",
     "gatsby": "^2.18.1",
     "gatsby-image": "^2.2.33",
+    "gatsby-plugin-less": "^3.0.14",
     "gatsby-plugin-manifest": "^2.2.29",
     "gatsby-plugin-offline": "^3.0.22",
     "gatsby-plugin-react-helmet": "^3.1.15",
@@ -15,10 +16,12 @@
     "gatsby-plugin-typescript": "^2.1.19",
     "gatsby-source-filesystem": "^2.1.38",
     "gatsby-transformer-sharp": "^2.3.5",
+    "less": "^3.10.3",
+    "moment": "^2.24.0",
     "prop-types": "^15.7.2",
-    "react": "^16.12.0",
     "react-dom": "^16.12.0",
-    "react-helmet": "^5.2.1"
+    "react-helmet": "^5.2.1",
+    "react": "^16.12.0"
   },
   "devDependencies": {
     "@types/react": "^16.9.11",
@@ -37,7 +40,8 @@
     "format": "prettier --write \"**/*.{js,jsx,json,md}\"",
     "start": "yarn run dev",
     "serve": "gatsby serve",
-    "test": "jest --coverage"
+    "test": "jest --coverage",
+    "lint": "eslint src/**/*.ts"
   },
   "repository": "https://github.com/drklee3/YOUtinerary.git"
 }

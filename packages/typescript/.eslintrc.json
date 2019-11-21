@@ -19,5 +19,10 @@
                 "allowTypedFunctionExpressions": true
             }
         ]
+    },
+    "settings": {
+        "react": {
+            "version": "detect"
+        }
     }
 }
