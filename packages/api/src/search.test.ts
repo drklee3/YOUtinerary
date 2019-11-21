@@ -1,5 +1,5 @@
+import { DirectionsRequest, FindPlaceRequest } from "@google/maps";
 import { searchLocation, searchRoute } from "./search";
-import { FindPlaceRequest, DirectionsRequest } from "@google/maps";
 
 describe("search", () => {
     it("should search locations", async () => {
@@ -19,22 +19,21 @@ describe("search", () => {
                 "rating",
                 "types",
             ],
+            locationbias: "point:37.7757044,-122.4345857",
         };
 
         const res = await searchLocation(request);
         const { json } = res;
 
-        expect(json.status).toBe("OK");
-        expect(json.candidates.length).toBe(2);
+        console.log(JSON.stringify(json, null, 4));
 
-        const sfLocation = json.candidates.find((item) =>
-            item.formatted_address!.includes("Fell St")
-        );
-        expect(sfLocation!.formatted_address).toBe(
+        expect(json.status).toBe("OK");
+        // with locationbias, this will only return the sf location.
+        expect(json.candidates.length).toBe(1);
+        expect(json.candidates[0].name).toBe("Urban Ritual Cafe");
+        expect(json.candidates[0].formatted_address).toBe(
             "488 Fell St, San Francisco, CA 94102, United States"
         );
-
-        console.log(JSON.stringify(res.json, null, 4));
     });
 
     it("should search routes", async () => {
@@ -61,7 +60,7 @@ describe("search", () => {
         ];
         /* eslint-enable */
 
-        expect(json.geocoded_waypoints).toBe(expectedWaypoints);
+        expect(json.geocoded_waypoints).toEqual(expectedWaypoints);
         console.log(JSON.stringify(res.json, null, 4));
     });
 });
