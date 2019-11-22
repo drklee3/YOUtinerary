@@ -1,6 +1,7 @@
 import { Col, Row } from "antd";
 import React from "react";
 import Layout from "../components/layout";
+import SimpleMap from "../components/map-layout";
 import Plan from "../components/Plan";
 import SEO from "../components/seo";
 
@@ -18,7 +19,7 @@ const IndexPage = (): JSX.Element => (
                 <Plan />
             </Col>
             <Col sm={24} md={12}>
-                map
+                <SimpleMap />
             </Col>
         </Row>
     </Layout>
