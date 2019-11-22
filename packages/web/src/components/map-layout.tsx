@@ -1,19 +1,18 @@
 import GoogleMapReact from "google-map-react";
 import React from "react";
-//import Plan
-
 const markers = [];
 let labelIndex = 1;
 const deleteMarker = (marker, markers) => {
     marker.setMap(null);
     marker = null;
+    markers.splice(marker, 1);
 };
 const addMarker = (location, map, maps) => {
     const marker = new maps.Marker({
         position: location,
         map: map,
         title: "test",
-        label: String(labelIndex++),
+        label: String(labelIndex),
     });
     maps.event.addListener(marker, "rightclick", function() {
         deleteMarker(this, markers);
@@ -21,7 +20,7 @@ const addMarker = (location, map, maps) => {
     markers.push(marker);
 };
 
-const resetBounds = (map, maps) => {
+/*const resetBounds = (map, maps) => {
     //Create new bounds object
     const bounds = new maps.LatLngBounds();
     //Loop through an array of points, add them to bounds
@@ -31,31 +30,22 @@ const resetBounds = (map, maps) => {
     }
     //Add new bounds object to map
     map.fitBounds(bounds);
-};
+};*/
 const handleApiLoaded = (map, maps) => {
     // for each item in the plan list, make a marker with its location and name
     // use map and maps objects;
     /* plan.forEach(event){
         addMarker(event.location, map, maps);
     }*/
+    markers.forEach((marker) => {
+        marker.setMap(map);
+    });
     maps.event.addListener(map, "click", function(event) {
         addMarker(event.latLng, map, maps);
+        labelIndex++;
     });
 };
 
-/*const getMapBounds = (map, maps, places) => {
-    const bounds = new maps.LatLngBounds();
-
-    places.forEach((place) => {
-        bounds.extend(
-            new maps.LatLng(
-                place.geometry.location.lat,
-                place.geometry.location.lng
-            )
-        );
-    });
-    return bounds;
-};*/
 class SimpleMap extends React.Component {
     static defaultProps = {
         center: {
@@ -66,7 +56,7 @@ class SimpleMap extends React.Component {
     };
 
     render() {
-        if (process.env.GATSBY_GOOGLE_API_KEY == undefined) {
+        if (process.env.GATSBY_GOOGLE_API_KEY === undefined) {
             return <div>Invalid Key</div>;
         }
         return (
