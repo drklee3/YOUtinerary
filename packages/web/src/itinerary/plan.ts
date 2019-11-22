@@ -40,7 +40,7 @@ export default class Plan {
      * Adds a single event, returns true if successful
      */
     public addEvent(event: Event): boolean {
-        if (this._events.includes(event)) {
+        if (this._events.some((item) => (item.id = event.id))) {
             return false;
         }
         this._events.push(event);
@@ -50,12 +50,9 @@ export default class Plan {
     /**
      * Gets a single event
      */
-    public getEvent(id: number): Event {
-        for (let counter = 0; counter < this._events.length; counter++) {
-            const result = this._events.filter((item) => item.id == id)[0];
-            return result;
-        }
-        throw new Error("Event cannot be Found");
+    public getEvent(id: number): Event | undefined {
+        const result = this._events.find((item) => item.id === id);
+        return result;
     }
 
     /**
@@ -73,9 +70,7 @@ export default class Plan {
      * Updates an existing event with modified values
      */
     public editEvent(id: number, newEvent: Event) {
-        for (let counter = 0; counter < this._events.length; counter++) {
-            const result = this._events.splice(counter, 1, newEvent);
-            return result;
-        }
+        const result = this._events.find((item) => item.id === id);
+        Object.assign(result, newEvent);
     }
 }
