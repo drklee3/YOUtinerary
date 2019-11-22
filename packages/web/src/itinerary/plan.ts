@@ -58,7 +58,7 @@ export default class Plan {
     /**
      * Removes a single event
      */
-    public removeEvent(id: number) {
+    public removeEvent(id: number): void {
         this._events.forEach((item, index) => {
             if (item.id == id) {
                 return this._events.splice(index, 1);
@@ -69,7 +69,7 @@ export default class Plan {
     /**
      * Updates an existing event with modified values
      */
-    public editEvent(id: number, newEvent: Event) {
+    public editEvent(id: number, newEvent: Event): void {
         const result = this._events.find((item) => item.id === id);
         Object.assign(result, newEvent);
     }
