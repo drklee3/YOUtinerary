@@ -1,43 +1,73 @@
 import { Button, Card, Empty, Icon, List, Typography } from "antd";
 import React from "react";
-import { Event as EventData } from "../itinerary/event";
+import EventData from "../itinerary/EventData";
+import {
+    addEvent,
+    editEvent,
+    editEventEnd,
+    editEventName,
+    editEventStart,
+} from "../itinerary/PlanHelpers";
+import {
+    restoreData,
+    restorePlan,
+    saveData,
+    savePlan,
+} from "../itinerary/store";
 import Event from "./Event";
 
 const { Title } = Typography;
 
-interface State {
+export interface Data {
     title: string;
-    plan: EventData[];
+}
+
+interface State {
+    data: Data;
+    events: EventData[];
 }
 
 export class Plan extends React.Component<{}, State> {
     state = {
-        title: "Your Plan",
-        plan: [new EventData(1, "test event", new Date(), new Date())],
+        data: restoreData() || { title: "Your Plan" },
+        events: restorePlan() || [],
     };
 
     constructor(props: {}) {
         super(props);
+    }
 
-        this.addEvent = this.addEvent.bind(this);
+    componentDidUpdate(prevProps: {}, prevState: State): void {
+        // update persistent data store
+        savePlan(prevState.events);
+        saveData(prevState.data);
     }
 
     onChangeTitle = (title: string): void => {
-        this.setState({ title });
+        this.setState({ data: { title } });
     };
 
-    addEvent(event: React.MouseEvent<HTMLElement, MouseEvent>): void {
-        const nextId =
-            this.state.plan.reduce((prev, curr) =>
-                prev.id > curr.id ? prev : curr
-            ).id + 1;
+    addEvent = (): void => {
         this.setState({
-            plan: [
-                ...this.state.plan,
-                new EventData(nextId, "new event", new Date(), new Date()),
-            ],
+            events: addEvent(this.state.events),
         });
-    }
+    };
+
+    editEvent = (modified: EventData): void => {
+        this.setState({ events: editEvent(this.state.events, modified) });
+    };
+
+    editEventName = (id: number, name: string): void => {
+        this.setState({ events: editEventName(this.state.events, id, name) });
+    };
+
+    editEventStart = (id: number, start: Date): void => {
+        this.setState({ events: editEventStart(this.state.events, id, start) });
+    };
+
+    editEventEnd = (id: number, end: Date): void => {
+        this.setState({ events: editEventEnd(this.state.events, id, end) });
+    };
 
     render(): JSX.Element {
         return (
@@ -48,7 +78,7 @@ export class Plan extends React.Component<{}, State> {
                             level={3}
                             editable={{ onChange: this.onChangeTitle }}
                         >
-                            {this.state.title}
+                            {this.state.data.title}
                         </Title>
                     }
                     bordered={true}
@@ -62,12 +92,17 @@ export class Plan extends React.Component<{}, State> {
                     ]}
                     hoverable={true}
                 >
-                    {this.state.plan.length > 0 ? (
+                    {this.state.events.length > 0 ? (
                         <List
-                            dataSource={this.state.plan}
+                            dataSource={this.state.events}
                             renderItem={(event) => (
                                 <List.Item>
-                                    <Event event={event} />
+                                    <Event
+                                        event={event}
+                                        onChangeName={this.editEventName}
+                                        onChangeStart={this.editEventStart}
+                                        onChangeEnd={this.editEventEnd}
+                                    />
                                 </List.Item>
                             )}
                         />
@@ -81,7 +116,9 @@ export class Plan extends React.Component<{}, State> {
                                 <span>{"You have no events! :("}</span>
                             }
                         >
-                            <Button type="primary">Add New Event</Button>
+                            <Button type="primary" onClick={this.addEvent}>
+                                Add New Event
+                            </Button>
                         </Empty>
                     )}
                 </Card>
