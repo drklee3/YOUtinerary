@@ -1,6 +1,5 @@
-import React, { Component } from "react";
 import GoogleMapReact from "google-map-react";
-import { string } from "prop-types";
+import React from "react";
 //import Plan
 
 const markers = [];
@@ -27,7 +26,7 @@ const resetBounds = (map, maps) => {
     const bounds = new maps.LatLngBounds();
     //Loop through an array of points, add them to bounds
     for (let i = 0; i < data.length; i++) {
-        let geoCode = new maps.LatLng(data[i][1], data[i][2]);
+        const geoCode = new maps.LatLng(data[i][1], data[i][2]);
         bounds.extend(geoCode);
     }
     //Add new bounds object to map
@@ -39,8 +38,6 @@ const handleApiLoaded = (map, maps) => {
     /* plan.forEach(event){
         addMarker(event.location, map, maps);
     }*/
-    addMarker({ lat: 36, lng: -119 }, map, maps);
-    addMarker({ lat: 36, lng: -118 }, map, maps);
     maps.event.addListener(map, "click", function(event) {
         addMarker(event.latLng, map, maps);
     });
