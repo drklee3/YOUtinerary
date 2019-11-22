@@ -3,9 +3,13 @@ import React from "react";
 const markers = [];
 let labelIndex = 1;
 const deleteMarker = (marker, markers) => {
+    markers.splice(markers.indexOf(marker), 1);
     marker.setMap(null);
     marker = null;
-    markers.splice(marker, 1);
+    markers.forEach((temp) => {
+        temp.setLabel(String(markers.indexOf(temp) + 1));
+    });
+    labelIndex = markers.length + 1;
 };
 const addMarker = (location, map, maps) => {
     const marker = new maps.Marker({
