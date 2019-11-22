@@ -1,4 +1,4 @@
-import Event from "./event";
+import Event from "./EventData";
 
 describe("event", () => {
     const now = new Date();

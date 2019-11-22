@@ -1,10 +1,18 @@
-export default class Event {
+export interface EventDataInterface {
+    id: number;
+    name: string;
+    start: Date;
+    end: Date;
+}
+
+export class EventData implements EventDataInterface {
     private _id: number;
     private _name: string;
     private _start: Date;
     private _end: Date;
 
     constructor(id: number, name: string, start: Date, end: Date) {
+        // default data
         this._id = id;
         this._name = name;
 
@@ -13,6 +21,15 @@ export default class Event {
 
         this._start = flipped ? end : start;
         this._end = flipped ? start : end;
+    }
+
+    public toJSON(): EventDataInterface {
+        return {
+            id: this._id,
+            name: this._name,
+            start: this._start,
+            end: this._end,
+        };
     }
 
     get id(): number {
@@ -54,3 +71,5 @@ export default class Event {
         return this._end.getTime() - this._start.getTime();
     }
 }
+
+export default EventData;

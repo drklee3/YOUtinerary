@@ -1,14 +1,13 @@
-import React from "react";
-import { Menu, Icon } from "antd";
+import { Button, Menu } from "antd";
 import { ClickParam } from "antd/lib/menu";
+import { navigate } from "gatsby";
+import React from "react";
 
-const { SubMenu } = Menu;
+interface Props {
+    location?: string;
+}
 
-class Nav extends React.Component {
-    state = {
-        current: "mail",
-    };
-
+class Nav extends React.Component<Props> {
     handleClick = (e: ClickParam): void => {
         console.log("click ", e);
         this.setState({
@@ -16,46 +15,41 @@ class Nav extends React.Component {
         });
     };
 
-    render() {
+    render(): JSX.Element {
+        const { location = "/" } = this.props;
+        console.log(this.props);
+
         return (
             <Menu
-                onClick={this.handleClick}
-                selectedKeys={[this.state.current]}
+                theme="light"
                 mode="horizontal"
+                selectedKeys={[location]}
+                style={{
+                    lineHeight: "64px",
+                }}
             >
-                <Menu.Item key="mail">
-                    <Icon type="mail" />
-                    Navigation One
-                </Menu.Item>
-                <Menu.Item key="app" disabled>
-                    <Icon type="appstore" />
-                    Navigation Two
-                </Menu.Item>
-                <SubMenu
-                    title={
-                        <span className="submenu-title-wrapper">
-                            <Icon type="setting" />
-                            Navigation Three - Submenu
-                        </span>
-                    }
+                <Menu.Item
+                    key="/"
+                    style={{ float: "left", border: "none" }}
+                    onClick={() => navigate("/")}
                 >
-                    <Menu.ItemGroup title="Item 1">
-                        <Menu.Item key="setting:1">Option 1</Menu.Item>
-                        <Menu.Item key="setting:2">Option 2</Menu.Item>
-                    </Menu.ItemGroup>
-                    <Menu.ItemGroup title="Item 2">
-                        <Menu.Item key="setting:3">Option 3</Menu.Item>
-                        <Menu.Item key="setting:4">Option 4</Menu.Item>
-                    </Menu.ItemGroup>
-                </SubMenu>
-                <Menu.Item key="alipay">
-                    <a
-                        href="https://ant.design"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
-                        Navigation Four - Link
-                    </a>
+                    <b>YOUtinerary</b>
+                </Menu.Item>
+                <Menu.Item
+                    key="/plan"
+                    style={{ float: "right", border: "none" }}
+                    onClick={() => navigate("/plan")}
+                >
+                    <Button type="primary" shape="round" size="large">
+                        Plan A Trip
+                    </Button>
+                </Menu.Item>
+                <Menu.Item
+                    key="/about"
+                    style={{ float: "right" }}
+                    onClick={() => navigate("/about")}
+                >
+                    About
                 </Menu.Item>
             </Menu>
         );

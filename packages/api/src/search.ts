@@ -2,6 +2,8 @@ import Maps, {
     FindPlaceRequest,
     FindPlaceFromTextResponse,
     ClientResponse,
+    DirectionsRequest,
+    DirectionsResponse,
 } from "@google/maps";
 import Config from "./config";
 
@@ -10,43 +12,38 @@ const MapsClient = Maps.createClient({
     Promise: Promise,
 });
 
-export interface SearchResult {
-    address: string;
-    // TODO(Zack): Figure out what fields are required, if there are available
-    // types existing we can use.
-}
-
-export interface Route {
-    // TODO(Slater): Define what route data consists of
-}
-
 export function searchLocation(
-    input: string
+    request: FindPlaceRequest
 ): Promise<ClientResponse<FindPlaceFromTextResponse>> {
-    // TODO(Zack): Search for business, location, etc via Google Maps Places API
-    // https://developers.google.com/places/web-service/intro
-
-    const request: FindPlaceRequest = {
-        input,
-        inputtype: "textquery",
-        language: "en",
-        fields: [
+    // default request parameters if not provided
+    if (!request.fields) {
+        request.fields = [
+            "formatted_address",
+            "geometry",
             "icon",
             "name",
             "opening_hours",
+            "permanently_closed",
+            "photos",
             "price_level",
             "rating",
             "types",
-            "formatted_address",
-            "permanently_closed",
-        ],
-    };
+        ];
+    }
+
+    if (!request.language) {
+        request.language = "en";
+    }
+
+    if (!request.inputtype) {
+        request.inputtype = "textquery";
+    }
 
     return MapsClient.findPlace(request).asPromise();
 }
 
-export function searchRoute(input: string): Route | undefined {
-    // TODO(Slater): Search for routes between given locations via Google Maps Routes API
-    // https://developers.google.com/maps/documentation/
-    return;
+export function searchRoute(
+    options: DirectionsRequest
+): Promise<ClientResponse<DirectionsResponse>> {
+    return MapsClient.directions(options).asPromise();
 }
