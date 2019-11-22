@@ -52,5 +52,11 @@ module.exports = {
                 },
             },
         },
+        {
+            resolve: "gatsby-plugin-less",
+            options: {
+                javascriptEnabled: true,
+            },
+        },
     ],
 };

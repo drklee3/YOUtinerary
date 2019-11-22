@@ -4,6 +4,7 @@ import bodyParser from "koa-bodyparser";
 import Config from "./config";
 
 import { searchLocation, searchRoute } from "./search";
+import { response } from "express";
 
 const app = new Koa();
 const router = new Router();
@@ -18,12 +19,24 @@ function main(): void {
 
     router.post("/search", async (ctx) => {
         const { query } = ctx.request.body;
-        ctx.body = searchLocation(query);
+
+        try {
+            ctx.body = await searchLocation(query);
+        } catch (e) {
+            ctx.body = { status: "ERROR", message: e };
+            response.status(500);
+        }
     });
 
     router.post("/routes", async (ctx) => {
         const { query } = ctx.request.body;
-        ctx.body = searchRoute(query);
+
+        try {
+            ctx.body = await searchRoute(query);
+        } catch (e) {
+            ctx.body = { status: "ERROR", message: e };
+            response.status(500);
+        }
     });
 
     app.use(async (ctx, next) => {
@@ -46,5 +59,9 @@ function main(): void {
     });
 }
 
-Config.validOrExit();
+if (!Config.isValid()) {
+    console.error(".env file is invalid. Please fix and run again.");
+    process.exit(1);
+}
+
 main();

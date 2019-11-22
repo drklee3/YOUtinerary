@@ -31,6 +31,7 @@ jobs:
               run: yarn run test
               env:
                   CI: true
+                  GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}
             - name: Upload Coverage
               run: yarn run codecov
               env:
