@@ -29,18 +29,33 @@ interface State {
 
 export class Plan extends React.Component<{}, State> {
     state = {
-        data: restoreData() || { title: "Your Plan" },
-        events: restorePlan() || [],
+        data: { title: "Your Plan" },
+        events: [],
     };
 
     constructor(props: {}) {
         super(props);
     }
 
-    componentDidUpdate(prevProps: {}, prevState: State): void {
+    componentDidMount(): void {
+        console.log("didmount");
+        const restoredData = restoreData();
+        const restoredPlan = restorePlan();
+
+        const restoredState = {
+            ...(restoredData ? { data: restoredData } : {}),
+            ...(restoredPlan ? { events: restoredPlan } : {}),
+        };
+
+        console.log(restoredState);
+
+        this.setState(restoredState);
+    }
+
+    componentDidUpdate(): void {
         // update persistent data store
-        savePlan(prevState.events);
-        saveData(prevState.data);
+        savePlan(this.state.events);
+        saveData(this.state.data);
     }
 
     onChangeTitle = (title: string): void => {
