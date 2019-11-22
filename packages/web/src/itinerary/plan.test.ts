@@ -63,6 +63,7 @@ describe("plan", () => {
         const event2 = new Event(1, "event 2", yesterday, now);
 
         plan.addEvent(event1);
-        plan.addEvent(event2);
+        const result = plan.addEvent(event2);
+        expect(result).toBe(false);
     });
 });
