@@ -1,15 +1,21 @@
+import { PlaceSearchResult } from "@google/maps";
+
 export interface EventDataInterface {
     id: number;
     name: string;
+    description?: string;
     start: Date;
     end: Date;
+    mapsData?: Partial<PlaceSearchResult>;
 }
 
 export class EventData implements EventDataInterface {
     private _id: number;
     private _name: string;
+    private _description?: string;
     private _start: Date;
     private _end: Date;
+    private _mapsData?: Partial<PlaceSearchResult>;
 
     constructor(id: number, name: string, start: Date, end: Date) {
         // default data
@@ -27,8 +33,10 @@ export class EventData implements EventDataInterface {
         return {
             id: this._id,
             name: this._name,
+            description: this._description,
             start: this._start,
             end: this._end,
+            mapsData: this._mapsData,
         };
     }
 
@@ -48,6 +56,14 @@ export class EventData implements EventDataInterface {
         this._name = name;
     }
 
+    get description(): string | undefined {
+        return this._description;
+    }
+
+    set description(description: string | undefined) {
+        this._description = description;
+    }
+
     get start(): Date {
         return this._start;
     }
@@ -64,11 +80,17 @@ export class EventData implements EventDataInterface {
         this._end = end;
     }
 
-    /**
-     * Gets duration of event in milliseconds
-     */
     get duration(): number {
+        // duration in ms
         return this._end.getTime() - this._start.getTime();
+    }
+
+    get mapsData(): EventDataInterface["mapsData"] {
+        return this._mapsData;
+    }
+
+    set mapsData(data: EventDataInterface["mapsData"]) {
+        this._mapsData = data;
     }
 }
 
