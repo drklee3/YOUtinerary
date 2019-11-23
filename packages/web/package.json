@@ -43,7 +43,7 @@
     "start": "yarn run dev",
     "serve": "gatsby serve",
     "test": "jest --coverage",
-    "lint": "eslint src/**/*.ts"
+    "lint": "eslint src/**/*.ts[x]"
   },
   "repository": "https://github.com/drklee3/YOUtinerary.git"
 }
