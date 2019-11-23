@@ -1,10 +1,8 @@
-import Koa from "koa";
 import Router from "@koa/router";
+import Koa from "koa";
 import bodyParser from "koa-bodyparser";
 import Config from "./config";
-
 import { searchLocation, searchRoute } from "./search";
-import { response } from "express";
 
 const app = new Koa();
 const router = new Router();
@@ -17,14 +15,14 @@ function main(): void {
         ctx.body = "Hello Koa";
     });
 
-    router.post("/search", async (ctx) => {
+    router.post("/locations", async (ctx) => {
         const { query } = ctx.request.body;
 
         try {
             ctx.body = await searchLocation(query);
         } catch (e) {
             ctx.body = { status: "ERROR", message: e };
-            response.status(500);
+            ctx.status = 500;
         }
     });
 
@@ -35,7 +33,7 @@ function main(): void {
             ctx.body = await searchRoute(query);
         } catch (e) {
             ctx.body = { status: "ERROR", message: e };
-            response.status(500);
+            ctx.status = 500;
         }
     });
 
