@@ -1,12 +1,25 @@
-import { Button, Card, Empty, Icon, List, Typography } from "antd";
+import { Button, Card, Empty, Icon, Typography } from "antd";
 import React from "react";
+import {
+    DragDropContext,
+    Draggable,
+    DraggableProvided,
+    DraggableStateSnapshot,
+    Droppable,
+    DroppableProvided,
+    DroppableStateSnapshot,
+    DropResult,
+    ResponderProvided,
+} from "react-beautiful-dnd";
 import EventData from "../itinerary/EventData";
 import {
     addEvent,
     editEvent,
+    editEventDescription,
     editEventEnd,
     editEventName,
     editEventStart,
+    reorderEvent,
 } from "../itinerary/PlanHelpers";
 import {
     restoreData,
@@ -28,7 +41,7 @@ interface State {
 }
 
 export class Plan extends React.Component<{}, State> {
-    state = {
+    state: State = {
         data: { title: "Your Plan" },
         events: [],
     };
@@ -62,6 +75,22 @@ export class Plan extends React.Component<{}, State> {
         this.setState({ data: { title } });
     };
 
+    onDragEnd = (result: DropResult, provided: ResponderProvided): void => {
+        console.log(result, provided);
+
+        if (!result.destination) {
+            return;
+        }
+
+        const reorderedEvents = reorderEvent(
+            this.state.events,
+            result.source.index,
+            result.destination.index
+        );
+
+        this.setState({ events: reorderedEvents });
+    };
+
     addEvent = (): void => {
         this.setState({
             events: addEvent(this.state.events),
@@ -74,6 +103,12 @@ export class Plan extends React.Component<{}, State> {
 
     editEventName = (id: number, name: string): void => {
         this.setState({ events: editEventName(this.state.events, id, name) });
+    };
+
+    editEventDescription = (id: number, description: string): void => {
+        this.setState({
+            events: editEventDescription(this.state.events, id, description),
+        });
     };
 
     editEventStart = (id: number, start: Date): void => {
@@ -108,19 +143,66 @@ export class Plan extends React.Component<{}, State> {
                     hoverable={true}
                 >
                     {this.state.events.length > 0 ? (
-                        <List
-                            dataSource={this.state.events}
-                            renderItem={(event) => (
-                                <List.Item>
-                                    <Event
-                                        event={event}
-                                        onChangeName={this.editEventName}
-                                        onChangeStart={this.editEventStart}
-                                        onChangeEnd={this.editEventEnd}
-                                    />
-                                </List.Item>
-                            )}
-                        />
+                        <DragDropContext onDragEnd={this.onDragEnd}>
+                            <Droppable droppableId="droppable">
+                                {(
+                                    provided: DroppableProvided,
+                                    snapshot: DroppableStateSnapshot
+                                ) => (
+                                    <div
+                                        {...provided.droppableProps}
+                                        ref={provided.innerRef}
+                                    >
+                                        {this.state.events.map(
+                                            (event, index) => (
+                                                <Draggable
+                                                    key={event.id}
+                                                    draggableId={event.id.toString()}
+                                                    index={index}
+                                                >
+                                                    {(
+                                                        providedDraggable: DraggableProvided,
+                                                        snapshotDraggable: DraggableStateSnapshot
+                                                    ) => (
+                                                        <div
+                                                            ref={
+                                                                providedDraggable.innerRef
+                                                            }
+                                                            {...providedDraggable.draggableProps}
+                                                            {...providedDraggable.dragHandleProps}
+                                                        >
+                                                            <Event
+                                                                event={event}
+                                                                onChangeName={
+                                                                    this
+                                                                        .editEventName
+                                                                }
+                                                                onChangeDescription={
+                                                                    this
+                                                                        .editEventDescription
+                                                                }
+                                                                onChangeStart={
+                                                                    this
+                                                                        .editEventStart
+                                                                }
+                                                                onChangeEnd={
+                                                                    this
+                                                                        .editEventEnd
+                                                                }
+                                                            />
+                                                            {
+                                                                providedDraggable.placeholder
+                                                            }
+                                                        </div>
+                                                    )}
+                                                </Draggable>
+                                            )
+                                        )}
+                                        {provided.placeholder}
+                                    </div>
+                                )}
+                            </Droppable>
+                        </DragDropContext>
                     ) : (
                         <Empty
                             image="https://gw.alipayobjects.com/mdn/miniapp_social/afts/img/A*pevERLJC9v0AAAAAAAAAAABjAQAAAQ/original"
