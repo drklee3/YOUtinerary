@@ -15,7 +15,7 @@ const IndexPage = (): JSX.Element => (
                 height: "100%",
             }}
         >
-            <Col sm={24} md={12}>
+            <Col sm={24} md={12} style={{ height: "100%" }}>
                 <Plan />
             </Col>
             <Col sm={24} md={12}>

@@ -1,4 +1,4 @@
-import { Card, Col, Icon, Row, TimePicker, Typography } from "antd";
+import { Card, Col, Icon, Row, TimePicker, Tooltip, Typography } from "antd";
 import moment, { Moment } from "moment";
 import React from "react";
 import EventData from "../itinerary/EventData";
@@ -11,6 +11,7 @@ interface Props {
     onChangeDescription: (id: number, description: string) => void;
     onChangeStart: (id: number, start: Date) => void;
     onChangeEnd: (id: number, end: Date) => void;
+    onRemove: (id: number) => void;
 }
 
 class Event extends React.Component<Props> {
@@ -28,6 +29,10 @@ class Event extends React.Component<Props> {
 
     onChangeEnd = (time: Moment): void => {
         this.props.onChangeEnd(this.props.event.id, time.toDate());
+    };
+
+    onRemove = (): void => {
+        this.props.onRemove(this.props.event.id);
     };
 
     render(): JSX.Element {
@@ -79,6 +84,18 @@ class Event extends React.Component<Props> {
                             >
                                 {name}
                             </Title>
+                            <Tooltip title="Delete this event">
+                                <Icon
+                                    type="close-circle"
+                                    theme="twoTone"
+                                    style={{
+                                        position: "absolute",
+                                        right: 0,
+                                        top: 0,
+                                    }}
+                                    onClick={this.onRemove}
+                                />
+                            </Tooltip>
                             <Paragraph>
                                 <Icon type="environment" theme="twoTone" />{" "}
                                 Location

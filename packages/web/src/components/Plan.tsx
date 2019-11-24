@@ -19,6 +19,7 @@ import {
     editEventEnd,
     editEventName,
     editEventStart,
+    removeEvent,
     reorderEvent,
 } from "../itinerary/PlanHelpers";
 import {
@@ -38,6 +39,47 @@ export interface Data {
 interface State {
     data: Data;
     events: EventData[];
+}
+
+// should be same as Event/Props but without event field so can't really reuse
+// it here
+interface EventListProps {
+    onChangeName: (id: number, name: string) => void;
+    onChangeDescription: (id: number, description: string) => void;
+    onChangeStart: (id: number, start: Date) => void;
+    onChangeEnd: (id: number, end: Date) => void;
+    onRemove: (id: number) => void;
+}
+
+function eventList(
+    events: EventData[],
+    eventActions: EventListProps
+): JSX.Element {
+    return (
+        <div>
+            {events.map((event, index) => (
+                <Draggable
+                    key={event.id}
+                    draggableId={event.id.toString()}
+                    index={index}
+                >
+                    {(
+                        providedDraggable: DraggableProvided,
+                        snapshotDraggable: DraggableStateSnapshot
+                    ) => (
+                        <div
+                            ref={providedDraggable.innerRef}
+                            {...providedDraggable.draggableProps}
+                            {...providedDraggable.dragHandleProps}
+                        >
+                            <Event event={event} {...eventActions} />
+                            {providedDraggable.placeholder}
+                        </div>
+                    )}
+                </Draggable>
+            ))}
+        </div>
+    );
 }
 
 export class Plan extends React.Component<{}, State> {
@@ -119,9 +161,20 @@ export class Plan extends React.Component<{}, State> {
         this.setState({ events: editEventEnd(this.state.events, id, end) });
     };
 
+    removeEvent = (id: number): void => {
+        this.setState({ events: removeEvent(this.state.events, id) });
+    };
+
     render(): JSX.Element {
         return (
-            <div style={{ padding: "20px" }}>
+            <div
+                style={{
+                    padding: "20px",
+                    height: "100%",
+                    maxHeight: "100%",
+                    overflowY: "scroll",
+                }}
+            >
                 <Card
                     title={
                         <Title
@@ -132,7 +185,9 @@ export class Plan extends React.Component<{}, State> {
                         </Title>
                     }
                     bordered={true}
-                    style={{ width: "100%", height: "100%" }}
+                    style={{
+                        width: "100%",
+                    }}
                     actions={[
                         <Icon
                             onClick={this.addEvent}
@@ -153,51 +208,14 @@ export class Plan extends React.Component<{}, State> {
                                         {...provided.droppableProps}
                                         ref={provided.innerRef}
                                     >
-                                        {this.state.events.map(
-                                            (event, index) => (
-                                                <Draggable
-                                                    key={event.id}
-                                                    draggableId={event.id.toString()}
-                                                    index={index}
-                                                >
-                                                    {(
-                                                        providedDraggable: DraggableProvided,
-                                                        snapshotDraggable: DraggableStateSnapshot
-                                                    ) => (
-                                                        <div
-                                                            ref={
-                                                                providedDraggable.innerRef
-                                                            }
-                                                            {...providedDraggable.draggableProps}
-                                                            {...providedDraggable.dragHandleProps}
-                                                        >
-                                                            <Event
-                                                                event={event}
-                                                                onChangeName={
-                                                                    this
-                                                                        .editEventName
-                                                                }
-                                                                onChangeDescription={
-                                                                    this
-                                                                        .editEventDescription
-                                                                }
-                                                                onChangeStart={
-                                                                    this
-                                                                        .editEventStart
-                                                                }
-                                                                onChangeEnd={
-                                                                    this
-                                                                        .editEventEnd
-                                                                }
-                                                            />
-                                                            {
-                                                                providedDraggable.placeholder
-                                                            }
-                                                        </div>
-                                                    )}
-                                                </Draggable>
-                                            )
-                                        )}
+                                        {eventList(this.state.events, {
+                                            onChangeName: this.editEventName,
+                                            onChangeDescription: this
+                                                .editEventDescription,
+                                            onChangeEnd: this.editEventEnd,
+                                            onChangeStart: this.editEventStart,
+                                            onRemove: this.removeEvent,
+                                        })}
                                         {provided.placeholder}
                                     </div>
                                 )}
