@@ -15,10 +15,10 @@ const IndexPage = (): JSX.Element => (
                 height: "100%",
             }}
         >
-            <Col sm={24} md={12} style={{ height: "100%" }}>
+            <Col xs={24} sm={24} md={24} lg={12} style={{ height: "100%" }}>
                 <Plan />
             </Col>
-            <Col sm={24} md={12}>
+            <Col xs={24} sm={24} md={24} lg={12}>
                 <SimpleMap />
             </Col>
         </Row>

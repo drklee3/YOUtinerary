@@ -52,9 +52,14 @@ class Event extends React.Component<Props> {
                     }}
                     hoverable={true}
                 >
-                    <Row>
-                        <Col span={6}>
+                    <Row type={"flex"}>
+                        <Col
+                            md={{ span: 6, order: 1 }}
+                            sm={{ span: 6, order: 1 }}
+                            xs={{ span: 24, order: 2 }}
+                        >
                             <Text strong>Start Time</Text>
+                            <br />
                             <TimePicker
                                 onChange={this.onChangeStart}
                                 value={moment(start)}
@@ -67,6 +72,7 @@ class Event extends React.Component<Props> {
                             />
                             <br />
                             <Text strong>End Time</Text>
+                            <br />
                             <TimePicker
                                 onChange={this.onChangeEnd}
                                 value={moment(end)}
@@ -77,7 +83,11 @@ class Event extends React.Component<Props> {
                                 suffixIcon={<></>}
                             />
                         </Col>
-                        <Col span={17} offset={1}>
+                        <Col
+                            md={{ span: 17, offset: 1, order: 2 }}
+                            sm={{ span: 17, offset: 1, order: 2 }}
+                            xs={{ span: 24, order: 1 }}
+                        >
                             <Title
                                 level={4}
                                 editable={{ onChange: this.onChangeName }}
