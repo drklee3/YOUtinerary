@@ -22,6 +22,7 @@
     "less": "^3.10.3",
     "moment": "^2.24.0",
     "prop-types": "^15.7.2",
+    "rc-queue-anim": "^1.8.3",
     "rc-texty": "^0.2.0",
     "rc-tween-one": "^2.6.5",
     "react": "^16.12.0",
