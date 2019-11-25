@@ -20,7 +20,7 @@
         "codecov": "^3.6.1",
         "concurrently": "^5.0.0",
         "conventional-changelog-cli": "^2.0.28",
-        "eslint": "^6.6.0",
+        "eslint": "^6.7.1",
         "husky": "^3.1.0",
         "jest": "^24.9.0",
         "nodemon": "^2.0.1",
