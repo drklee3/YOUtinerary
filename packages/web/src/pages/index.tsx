@@ -1,5 +1,8 @@
 import { Button, Col, Icon, Row, Typography } from "antd";
 import { Link } from "gatsby";
+import Texty from "rc-texty";
+import "rc-texty/assets/index.css";
+import TweenOne from "rc-tween-one";
 import React from "react";
 import Layout from "../components/layout";
 import SEO from "../components/seo";
@@ -22,12 +25,24 @@ const IndexPage = (): JSX.Element => (
         >
             <Col span={12}>
                 <Title level={1} style={{ fontSize: "68px" }}>
-                    Plan Your Trip
+                    <Texty>Plan Your Trip</Texty>
                 </Title>
                 <Link to="/plan">
-                    <Button type="primary" size="large" shape="round">
-                        Get Started <Icon type="arrow-right" />
-                    </Button>
+                    <TweenOne
+                        animation={{
+                            x: 0,
+                            opacity: 1,
+                            repeat: 0,
+                            reverse: true,
+                            duration: 1200,
+                            ease: "easeOutQuart",
+                        }}
+                        style={{ transform: "translateX(-50px)", opacity: 0 }}
+                    >
+                        <Button type="primary" size="large" shape="round">
+                            Get Started <Icon type="arrow-right" />
+                        </Button>
+                    </TweenOne>
                 </Link>
             </Col>
             <Col span={12}></Col>
