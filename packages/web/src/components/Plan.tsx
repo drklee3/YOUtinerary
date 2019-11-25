@@ -251,7 +251,7 @@ export class Plan extends React.Component<{}, State> {
                             }
                         >
                             <Button type="primary" onClick={this.addEvent}>
-                                Add New Event
+                                Add a new event
                             </Button>
                         </Empty>
                     )}

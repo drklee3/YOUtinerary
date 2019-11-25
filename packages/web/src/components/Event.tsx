@@ -107,12 +107,26 @@ class Event extends React.Component<Props> {
                                 />
                             </Tooltip>
                             <Paragraph>
-                                <Icon type="environment" theme="twoTone" />{" "}
+                                <Icon
+                                    type="environment"
+                                    theme="twoTone"
+                                    twoToneColor="#f04134"
+                                />{" "}
                                 Location
                                 <br />
-                                <Icon type="star" theme="twoTone" /> Rating
+                                <Icon
+                                    type="star"
+                                    theme="twoTone"
+                                    twoToneColor="#ffbf00"
+                                />{" "}
+                                Rating
                                 <br />
-                                <Icon type="dollar" theme="twoTone" /> Price
+                                <Icon
+                                    type="dollar"
+                                    theme="twoTone"
+                                    twoToneColor="#00a854"
+                                />{" "}
+                                Price
                             </Paragraph>
                             <Paragraph>
                                 <Icon type="profile" theme="twoTone" />
