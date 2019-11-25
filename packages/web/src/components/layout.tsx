@@ -48,29 +48,6 @@ const Layout = ({ children, location }: Props): JSX.Element => {
                 <Nav location={location} />
             </Header>
             <Content style={{ height: "100%" }}>{children}</Content>
-            <Footer>
-                {data.title}
-                <Text strong>
-                    <a
-                        href="https://github.com/drklee3/YOUtinerary"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
-                        drklee3/YOUtinerary
-                    </a>
-                </Text>
-                <br />
-                <Text>
-                    Source code licensed{" "}
-                    <a
-                        href="https://opensource.org/licenses/mit-license.php"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
-                        MIT
-                    </a>
-                </Text>
-            </Footer>
         </AntdLayout>
     );
 };

@@ -1,4 +1,4 @@
-import { Button, Menu } from "antd";
+import { Menu } from "antd";
 import { ClickParam } from "antd/lib/menu";
 import { navigate } from "gatsby";
 import React from "react";
@@ -36,13 +36,16 @@ class Nav extends React.Component<Props> {
                     <b>YOUtinerary</b>
                 </Menu.Item>
                 <Menu.Item
-                    key="/plan"
+                    key="/github"
                     style={{ float: "right", border: "none" }}
-                    onClick={() => navigate("/plan")}
                 >
-                    <Button type="primary" shape="round" size="large">
-                        Plan A Trip
-                    </Button>
+                    <a
+                        href="https://github.com/drklee3/YOUtinerary"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        GitHub
+                    </a>
                 </Menu.Item>
                 <Menu.Item
                     key="/about"
