@@ -40,14 +40,19 @@ const AboutPage = ({ data }: AboutPageProps): JSX.Element => {
     let dataJson;
     try {
         const origData = JSON.parse(data.githubStats.internal.content);
-        origData.sort((a, b) => b.total - a.total);
-        dataJson = origData.map((u) => {
+        if (!origData) {
+            throw new Error(`failed to parse JSON ${origData}`);
+        }
+        origData.sort((a: any, b: any) => b.total - a.total);
+        dataJson = origData.map((u: any) => {
             return {
                 ...u,
                 changes: u.weeks.reduce(sumChanges),
             };
         });
-    } catch {}
+    } catch (e) {
+        console.error("Failed to get GitHub contributors:", e);
+    }
 
     return (
         <Layout location="/about">
