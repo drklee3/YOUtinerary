@@ -17,7 +17,7 @@
     "gatsby-plugin-sharp": "^2.3.4",
     "gatsby-plugin-typescript": "^2.1.19",
     "gatsby-source-filesystem": "^2.1.38",
-    "gatsby-transformer-sharp": "^2.3.5",
+    "gatsby-transformer-sharp": "^2.3.6",
     "google-map-react": "^1.1.5",
     "less": "^3.10.3",
     "moment": "^2.24.0",
