@@ -50,7 +50,6 @@ class Event extends React.Component<Props> {
                     style={{
                         width: "100%",
                     }}
-                    hoverable={true}
                 >
                     <Row type={"flex"}>
                         <Col

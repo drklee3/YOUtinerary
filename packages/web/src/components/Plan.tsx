@@ -192,7 +192,6 @@ export class Plan extends React.Component<{}, State> {
                         width: "100%",
                         minHeight: "100%",
                     }}
-                    hoverable={true}
                 >
                     {this.state.events.length > 0 ? (
                         <>
