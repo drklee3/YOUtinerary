@@ -62,6 +62,7 @@ const IndexPage = (): JSX.Element => (
                 width: "100vw",
                 height: "100vh",
                 objectFit: "cover",
+                objectPosition: "75%",
             }}
         />
     </>
