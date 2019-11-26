@@ -6518,12 +6518,12 @@ gatsby-plugin-eslint@^2.0.8:
   resolved "https://registry.yarnpkg.com/gatsby-plugin-eslint/-/gatsby-plugin-eslint-2.0.8.tgz#1ff7f546a427d274dc2de3932ba29822aae330c3"
   integrity sha512-vAMy37povmQJNg6ZxY78fkWR3pKwG8MNMhO3u+4vXj2MYT5avhFvHPJTAb126ZCuygf30gAWlpwbV50zP894Jw==
 
-gatsby-plugin-less@^3.0.14:
-  version "3.0.14"
-  resolved "https://registry.yarnpkg.com/gatsby-plugin-less/-/gatsby-plugin-less-3.0.14.tgz#2bbf6e08e333409e1757571e05f9107d6dcf2114"
-  integrity sha512-B3w4I0dOZD1Hc4G8tYkxRSPR05Bh7LbxY5zSDCbYjj6HfxzGJhkSuj/RB6aofjyHlNwkwkjlMqRCvP1EXL6yZA==
+gatsby-plugin-less@^3.0.15:
+  version "3.0.15"
+  resolved "https://registry.yarnpkg.com/gatsby-plugin-less/-/gatsby-plugin-less-3.0.15.tgz#f79623f239fc91dbb9dc79a4f2e850fa235d7d9b"
+  integrity sha512-3QL1G+v1+tDlcWhur0EjKH1DHgXxokIYJ5QYsghLwm+uz60uQ+iXaA3Uj6z/ixzn3Z69/sL63N+z0xl5P29qbg==
   dependencies:
-    "@babel/runtime" "^7.7.2"
+    "@babel/runtime" "^7.7.4"
     less-loader "^5.0.0"
 
 gatsby-plugin-manifest@^2.2.29:
