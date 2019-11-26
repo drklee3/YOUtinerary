@@ -5,15 +5,12 @@
  * See: https://www.gatsbyjs.org/docs/use-static-query/
  */
 
-import { Layout as AntdLayout, Typography } from "antd";
-import { graphql, useStaticQuery } from "gatsby";
+import { Layout as AntdLayout } from "antd";
 import React from "react";
 import "../styles/style.less";
 import Nav from "./Nav";
 
-const { Text } = Typography;
-
-const { Header, Content, Footer } = AntdLayout;
+const { Header, Content } = AntdLayout;
 
 interface Props {
     children: JSX.Element[] | JSX.Element;
@@ -21,16 +18,6 @@ interface Props {
 }
 
 const Layout = ({ children, location }: Props): JSX.Element => {
-    const data = useStaticQuery(graphql`
-        query SiteTitleQuery {
-            site {
-                siteMetadata {
-                    title
-                }
-            }
-        }
-    `);
-
     return (
         <AntdLayout
             className="layout"
