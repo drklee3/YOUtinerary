@@ -24,7 +24,7 @@ const IndexPage = (): JSX.Element => (
                     padding: "0 50px",
                 }}
             >
-                <Col span={12}>
+                <Col span={24}>
                     <Title level={1} style={{ fontSize: "68px" }}>
                         <Texty>Plan Your Trip</Texty>
                     </Title>
