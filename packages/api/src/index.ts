@@ -1,3 +1,4 @@
+import cors from "@koa/cors";
 import Router from "@koa/router";
 import Koa from "koa";
 import bodyParser from "koa-bodyparser";
@@ -17,10 +18,10 @@ function main(): void {
     });
 
     router.post("/locations", async (ctx) => {
-        const { query } = ctx.request.body;
+        const request = ctx.request.body;
 
         try {
-            ctx.body = await searchLocation(query);
+            ctx.body = await searchLocation(request);
         } catch (e) {
             ctx.body = { status: "ERROR", message: e };
             ctx.status = 500;
@@ -28,10 +29,10 @@ function main(): void {
     });
 
     router.post("/routes", async (ctx) => {
-        const { query } = ctx.request.body;
+        const request = ctx.request.body;
 
         try {
-            ctx.body = await searchRoute(query);
+            ctx.body = await searchRoute(request);
         } catch (e) {
             ctx.body = { status: "ERROR", message: e };
             ctx.status = 500;
@@ -39,10 +40,16 @@ function main(): void {
     });
 
     app.use(logger())
+        .use(
+            cors({
+                origin: "*",
+            })
+        )
         .use(async (ctx, next) => {
             try {
                 await next();
             } catch (err) {
+                console.error(err);
                 // will only respond with JSON
                 ctx.status = err.statusCode || err.status || 500;
                 ctx.body = {
@@ -50,9 +57,9 @@ function main(): void {
                 };
             }
         })
+        .use(bodyParser())
         .use(router.routes())
-        .use(router.allowedMethods())
-        .use(bodyParser());
+        .use(router.allowedMethods());
 
     app.listen(koaPort, koaInterface, () => {
         console.log(`Listening on ${koaInterface}:${koaPort}`);
