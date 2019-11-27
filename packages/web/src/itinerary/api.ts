@@ -6,7 +6,11 @@ import {
 } from "@google/maps";
 import axios from "axios";
 
-const API_BASE_URL = "http://127.0.0.1:3000";
+const API_BASE_URL = process.env.GATSBY_DEV
+    ? "http://127.0.0.1:3000"
+    : "https://youtinerary-api.dlee.dev";
+
+console.log("Using API url:", API_BASE_URL);
 
 const API_LOCATIONS_ENDPOINT = API_BASE_URL + "/locations";
 const API_ROUTES_ENDPOINT = API_BASE_URL + "/routes";
