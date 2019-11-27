@@ -18,7 +18,7 @@ exports.sourceNodes = async ({ actions }) => {
     let res;
     try {
         res = await axios.get(GITHUB_STATS_ENDPOINT);
-        console.log("Fetched data from GitHub API:", res.data);
+        console.log("Fetched data from GitHub API:", res);
     } catch (e) {
         console.error("Failed to query GitHub API:", e);
     }
