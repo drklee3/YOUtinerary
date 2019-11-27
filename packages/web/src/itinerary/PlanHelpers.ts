@@ -8,6 +8,7 @@
  * raised.
  */
 
+import { PlaceSearchResult } from "@google/maps";
 import EventData from "./EventData";
 
 export function addEvent(events: EventData[]): EventData[] {
@@ -71,7 +72,7 @@ export function editEvent(
 function editEventField(
     events: EventData[],
     id: number,
-    key: "name" | "description" | "start" | "end",
+    key: "name" | "description" | "start" | "end" | "userLocation" | "mapsData",
     value: any
 ): EventData[] {
     const index = findEventIndex(events, id);
@@ -116,4 +117,20 @@ export function editEventEnd(
     end: Date
 ): EventData[] {
     return editEventField(events, id, "end", end);
+}
+
+export function editEventUserLocation(
+    events: EventData[],
+    id: number,
+    userLocation: string
+): EventData[] {
+    return editEventField(events, id, "userLocation", userLocation);
+}
+
+export function editEventMapsData(
+    events: EventData[],
+    id: number,
+    mapsData?: Partial<PlaceSearchResult>
+): EventData[] {
+    return editEventField(events, id, "mapsData", mapsData);
 }

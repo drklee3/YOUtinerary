@@ -1,3 +1,4 @@
+import { PlaceSearchResult } from "@google/maps";
 import { Button, Card, Col, Empty, Row, Typography } from "antd";
 import QueueAnim from "rc-queue-anim";
 import React from "react";
@@ -17,8 +18,10 @@ import {
     editEvent,
     editEventDescription,
     editEventEnd,
+    editEventMapsData,
     editEventName,
     editEventStart,
+    editEventUserLocation,
     removeEvent,
     reorderEvent,
 } from "../itinerary/PlanHelpers";
@@ -39,6 +42,11 @@ interface EventListProps {
     onChangeDescription: (id: number, description: string) => void;
     onChangeStart: (id: number, start: Date) => void;
     onChangeEnd: (id: number, end: Date) => void;
+    onChangeUserLocation: (id: number, userLocation: string) => void;
+    onChangeMapsData: (
+        id: number,
+        mapsData?: Partial<PlaceSearchResult>
+    ) => void;
     onRemove: (id: number) => void;
 }
 
@@ -161,6 +169,21 @@ export class Plan extends React.Component<{}, State> {
         this.setState({ events: editEventEnd(this.state.events, id, end) });
     };
 
+    editEventUserLocation = (id: number, userLocation: string): void => {
+        this.setState({
+            events: editEventUserLocation(this.state.events, id, userLocation),
+        });
+    };
+
+    editEventMapsData = (
+        id: number,
+        mapsData?: Partial<PlaceSearchResult>
+    ): void => {
+        this.setState({
+            events: editEventMapsData(this.state.events, id, mapsData),
+        });
+    };
+
     removeEvent = (id: number): void => {
         this.setState({ events: removeEvent(this.state.events, id) });
     };
@@ -218,6 +241,10 @@ export class Plan extends React.Component<{}, State> {
                                                                 .editEventEnd,
                                                             onChangeStart: this
                                                                 .editEventStart,
+                                                            onChangeUserLocation: this
+                                                                .editEventUserLocation,
+                                                            onChangeMapsData: this
+                                                                .editEventMapsData,
                                                             onRemove: this
                                                                 .removeEvent,
                                                         }

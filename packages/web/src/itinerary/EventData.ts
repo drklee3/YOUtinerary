@@ -6,6 +6,7 @@ export interface EventDataInterface {
     description?: string;
     start: Date;
     end: Date;
+    userLocation?: string;
     mapsData?: Partial<PlaceSearchResult>;
 }
 
@@ -15,9 +16,18 @@ export class EventData implements EventDataInterface {
     private _description?: string;
     private _start: Date;
     private _end: Date;
+    private _userLocation?: string;
     private _mapsData?: Partial<PlaceSearchResult>;
 
-    constructor(id: number, name: string, start: Date, end: Date) {
+    constructor(
+        id: number,
+        name: string,
+        start: Date,
+        end: Date,
+        description?: string,
+        userLocation?: string,
+        mapsData?: Partial<PlaceSearchResult>
+    ) {
         // default data
         this._id = id;
         this._name = name;
@@ -27,6 +37,10 @@ export class EventData implements EventDataInterface {
 
         this._start = flipped ? end : start;
         this._end = flipped ? start : end;
+
+        this._description = description;
+        this._userLocation = userLocation;
+        this._mapsData = mapsData;
     }
 
     public toJSON(): EventDataInterface {
@@ -36,6 +50,7 @@ export class EventData implements EventDataInterface {
             description: this._description,
             start: this._start,
             end: this._end,
+            userLocation: this._userLocation,
             mapsData: this._mapsData,
         };
     }
@@ -83,6 +98,14 @@ export class EventData implements EventDataInterface {
     get duration(): number {
         // duration in ms
         return this._end.getTime() - this._start.getTime();
+    }
+
+    get userLocation(): EventDataInterface["userLocation"] {
+        return this._userLocation;
+    }
+
+    set userLocation(userLocation: EventDataInterface["userLocation"]) {
+        this._userLocation = userLocation;
     }
 
     get mapsData(): EventDataInterface["mapsData"] {
