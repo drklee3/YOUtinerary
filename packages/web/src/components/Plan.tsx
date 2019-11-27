@@ -1,17 +1,16 @@
-import { Button, Card, Empty, Typography } from "antd";
+import { Button, Card, Col, Empty, Row, Typography } from "antd";
 import QueueAnim from "rc-queue-anim";
 import React from "react";
 import {
     DragDropContext,
     Draggable,
     DraggableProvided,
-    DraggableStateSnapshot,
     Droppable,
     DroppableProvided,
-    DroppableStateSnapshot,
     DropResult,
     ResponderProvided,
 } from "react-beautiful-dnd";
+import MapView from "../components/MapView";
 import EventData from "../itinerary/EventData";
 import {
     addEvent,
@@ -32,15 +31,6 @@ import {
 import Event from "./Event";
 
 const { Title, Text } = Typography;
-
-export interface Data {
-    title: string;
-}
-
-interface State {
-    data: Data;
-    events: EventData[];
-}
 
 // should be same as Event/Props but without event field so can't really reuse
 // it here
@@ -65,10 +55,7 @@ function eventList(
                         draggableId={event.id.toString()}
                         index={index}
                     >
-                        {(
-                            providedDraggable: DraggableProvided,
-                            snapshotDraggable: DraggableStateSnapshot
-                        ) => (
+                        {(providedDraggable: DraggableProvided) => (
                             <div
                                 ref={providedDraggable.innerRef}
                                 {...providedDraggable.draggableProps}
@@ -85,6 +72,15 @@ function eventList(
     );
 }
 
+export interface Data {
+    title: string;
+}
+
+interface State {
+    data: Data;
+    events: EventData[];
+}
+
 export class Plan extends React.Component<{}, State> {
     state: State = {
         data: { title: "Your Plan" },
@@ -96,18 +92,19 @@ export class Plan extends React.Component<{}, State> {
     }
 
     componentDidMount(): void {
-        console.log("didmount");
         const restoredData = restoreData();
         const restoredPlan = restorePlan();
 
-        const restoredState = {
-            ...(restoredData ? { data: restoredData } : {}),
-            ...(restoredPlan ? { events: restoredPlan } : {}),
-        };
+        if (restoredPlan) {
+            console.log("Restored plan from browser");
+        }
 
-        console.log(restoredState);
-
-        this.setState(restoredState);
+        this.setState({
+            data: restoredData
+                ? { title: restoredData.title }
+                : { title: "Your Plan" },
+            events: restoredPlan ? restoredPlan : [],
+        });
     }
 
     componentDidUpdate(): void {
@@ -170,92 +167,110 @@ export class Plan extends React.Component<{}, State> {
 
     render(): JSX.Element {
         return (
-            <div
+            <Row
+                type="flex"
+                justify="space-around"
                 style={{
-                    padding: "20px",
                     height: "100%",
-                    maxHeight: "100%",
-                    overflowY: "scroll",
                 }}
             >
-                <Card
-                    title={
-                        <Title
-                            level={3}
-                            editable={{ onChange: this.onChangeTitle }}
-                        >
-                            {this.state.data.title}
-                        </Title>
-                    }
-                    bordered={true}
-                    style={{
-                        width: "100%",
-                        minHeight: "100%",
-                    }}
-                >
-                    {this.state.events.length > 0 ? (
-                        <>
-                            <DragDropContext onDragEnd={this.onDragEnd}>
-                                <Droppable droppableId="droppable">
-                                    {(
-                                        provided: DroppableProvided,
-                                        snapshot: DroppableStateSnapshot
-                                    ) => (
-                                        <div
-                                            {...provided.droppableProps}
-                                            ref={provided.innerRef}
-                                        >
-                                            {eventList(this.state.events, {
-                                                onChangeName: this
-                                                    .editEventName,
-                                                onChangeDescription: this
-                                                    .editEventDescription,
-                                                onChangeEnd: this.editEventEnd,
-                                                onChangeStart: this
-                                                    .editEventStart,
-                                                onRemove: this.removeEvent,
-                                            })}
-                                            {provided.placeholder}
-                                        </div>
-                                    )}
-                                </Droppable>
-                            </DragDropContext>
-                            <QueueAnim
-                                delay={400}
-                                duration={500}
-                                type={"bottom"}
-                                style={{
-                                    display: "flex",
-                                    justifyContent: "center",
-                                }}
-                            >
-                                <Button
-                                    key={1}
-                                    type="primary"
-                                    onClick={this.addEvent}
-                                    style={{ marginTop: "8px" }}
+                <Col xs={24} sm={24} md={24} lg={12} style={{ height: "100%" }}>
+                    <div
+                        style={{
+                            padding: "20px",
+                            height: "100%",
+                            maxHeight: "100%",
+                            overflowY: "scroll",
+                        }}
+                    >
+                        <Card
+                            title={
+                                <Title
+                                    level={3}
+                                    editable={{ onChange: this.onChangeTitle }}
                                 >
-                                    <Text>Add a new event</Text>
-                                </Button>
-                            </QueueAnim>
-                        </>
-                    ) : (
-                        <Empty
-                            image="https://gw.alipayobjects.com/mdn/miniapp_social/afts/img/A*pevERLJC9v0AAAAAAAAAAABjAQAAAQ/original"
-                            imageStyle={{
-                                height: 60,
-                            }}
-                            description={
-                                <span>{"You have no events! :("}</span>
+                                    {this.state.data.title}
+                                </Title>
                             }
+                            bordered={true}
+                            style={{
+                                width: "100%",
+                                minHeight: "100%",
+                            }}
                         >
-                            <Button type="primary" onClick={this.addEvent}>
-                                Add a new event
-                            </Button>
-                        </Empty>
-                    )}
-                </Card>
-            </div>
+                            {this.state.events.length > 0 ? (
+                                <>
+                                    <DragDropContext onDragEnd={this.onDragEnd}>
+                                        <Droppable droppableId="droppable">
+                                            {(provided: DroppableProvided) => (
+                                                <div
+                                                    {...provided.droppableProps}
+                                                    ref={provided.innerRef}
+                                                >
+                                                    {eventList(
+                                                        this.state.events,
+                                                        {
+                                                            onChangeName: this
+                                                                .editEventName,
+                                                            onChangeDescription: this
+                                                                .editEventDescription,
+                                                            onChangeEnd: this
+                                                                .editEventEnd,
+                                                            onChangeStart: this
+                                                                .editEventStart,
+                                                            onRemove: this
+                                                                .removeEvent,
+                                                        }
+                                                    )}
+                                                    {provided.placeholder}
+                                                </div>
+                                            )}
+                                        </Droppable>
+                                    </DragDropContext>
+                                    <QueueAnim
+                                        delay={400}
+                                        duration={500}
+                                        type={"bottom"}
+                                        style={{
+                                            display: "flex",
+                                            justifyContent: "center",
+                                        }}
+                                    >
+                                        <Button
+                                            key={1}
+                                            type="primary"
+                                            onClick={this.addEvent}
+                                            style={{ marginTop: "8px" }}
+                                        >
+                                            <Text>Add a new event</Text>
+                                        </Button>
+                                    </QueueAnim>
+                                </>
+                            ) : (
+                                <Empty
+                                    image="https://gw.alipayobjects.com/mdn/miniapp_social/afts/img/A*pevERLJC9v0AAAAAAAAAAABjAQAAAQ/original"
+                                    imageStyle={{
+                                        height: 60,
+                                    }}
+                                    description={
+                                        <span>{"You have no events! :("}</span>
+                                    }
+                                >
+                                    <Button
+                                        type="primary"
+                                        onClick={this.addEvent}
+                                    >
+                                        Add a new event
+                                    </Button>
+                                </Empty>
+                            )}
+                        </Card>
+                    </div>
+                </Col>
+                <Col xs={24} sm={24} md={24} lg={12}>
+                    <MapView events={this.state.events} />
+                </Col>
+            </Row>
         );
     }
 }
