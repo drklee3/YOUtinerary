@@ -1,6 +1,7 @@
 import Router from "@koa/router";
 import Koa from "koa";
 import bodyParser from "koa-bodyparser";
+import logger from "koa-logger";
 import Config from "./config";
 import { searchLocation, searchRoute } from "./search";
 
@@ -37,17 +38,18 @@ function main(): void {
         }
     });
 
-    app.use(async (ctx, next) => {
-        try {
-            await next();
-        } catch (err) {
-            // will only respond with JSON
-            ctx.status = err.statusCode || err.status || 500;
-            ctx.body = {
-                message: err.message,
-            };
-        }
-    })
+    app.use(logger())
+        .use(async (ctx, next) => {
+            try {
+                await next();
+            } catch (err) {
+                // will only respond with JSON
+                ctx.status = err.statusCode || err.status || 500;
+                ctx.body = {
+                    message: err.message,
+                };
+            }
+        })
         .use(router.routes())
         .use(router.allowedMethods())
         .use(bodyParser());
