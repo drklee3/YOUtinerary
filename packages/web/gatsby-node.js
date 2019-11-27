@@ -12,13 +12,13 @@ const crypto = require("crypto");
 const GITHUB_STATS_ENDPOINT =
     "https://api.github.com/repos/drklee3/YOUtinerary/stats/contributors";
 
-// You can delete this file if you're not using it
 exports.sourceNodes = async ({ actions }) => {
     const { createNode } = actions;
 
     let res;
     try {
         res = await axios.get(GITHUB_STATS_ENDPOINT);
+        console.log("Fetched data from GitHub API:", res.data);
     } catch (e) {
         console.error("Failed to query GitHub API:", e);
     }

@@ -43,6 +43,8 @@ const AboutPage = ({ data }: AboutPageProps): JSX.Element => {
         if (!origData) {
             throw new Error(`failed to parse JSON ${origData}`);
         }
+
+        console.log("origData:", origData);
         origData.sort((a: any, b: any) => b.total - a.total);
         dataJson = origData.map((u: any) => {
             return {
@@ -52,6 +54,7 @@ const AboutPage = ({ data }: AboutPageProps): JSX.Element => {
         });
     } catch (e) {
         console.error("Failed to get GitHub contributors:", e);
+        console.error("Data:", data);
     }
 
     return (
