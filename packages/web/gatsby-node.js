@@ -16,7 +16,12 @@ const GITHUB_STATS_ENDPOINT =
 exports.sourceNodes = async ({ actions }) => {
     const { createNode } = actions;
 
-    const res = await axios.get(GITHUB_STATS_ENDPOINT);
+    let res;
+    try {
+        res = await axios.get(GITHUB_STATS_ENDPOINT);
+    } catch (e) {
+        console.error("Failed to query GitHub API:", e);
+    }
 
     createNode({
         id: "githubStats",
