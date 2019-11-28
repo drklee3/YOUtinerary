@@ -8,7 +8,7 @@ const defaultMapOptions = {
         lat: 37.349258,
         lng: -121.941026,
     },
-    zoom: 12,
+    zoom: 13,
 };
 
 const getMapBounds = (
@@ -21,10 +21,10 @@ const getMapBounds = (
 
     events.forEach((event) => {
         if (!event.mapsData || !event.mapsData.geometry) {
-            locations++;
             return;
         }
 
+        locations++;
         bounds.extend(
             new maps.LatLng(
                 event.mapsData.geometry.location.lat,
@@ -32,6 +32,8 @@ const getMapBounds = (
             )
         );
     });
+
+    console.log(`Map bounds created with ${locations} locations`);
 
     if (locations === 1) {
         return;
