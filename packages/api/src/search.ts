@@ -1,5 +1,4 @@
 import Maps, {
-    ClientResponse,
     DirectionsRequest,
     DirectionsResponse,
     FindPlaceFromTextResponse,
@@ -13,9 +12,9 @@ const MapsClient = Maps.createClient({
     Promise: Promise,
 });
 
-export function searchLocation(
+export async function searchLocation(
     request: FindPlaceRequest
-): Promise<ClientResponse<FindPlaceFromTextResponse>> {
+): Promise<FindPlaceFromTextResponse> {
     // add required default request parameters if not provided
     request.fields = union(request.fields, [
         "place_id",
@@ -39,11 +38,13 @@ export function searchLocation(
         request.inputtype = "textquery";
     }
 
-    return MapsClient.findPlace(request).asPromise();
+    const res = await MapsClient.findPlace(request).asPromise();
+    return res.json;
 }
 
-export function searchRoute(
+export async function searchRoute(
     options: DirectionsRequest
-): Promise<ClientResponse<DirectionsResponse>> {
-    return MapsClient.directions(options).asPromise();
+): Promise<DirectionsResponse> {
+    const res = await MapsClient.directions(options).asPromise();
+    return res.json;
 }
