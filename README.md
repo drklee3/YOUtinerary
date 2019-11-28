@@ -9,3 +9,5 @@ Web application that provides easy scheduling and visual overviews of trips.
 Project for CSCI 187: Design and Management of Software at SCU.
 
 Please refer to the [wiki] for more documentation.
+
+[wiki]: https://github.com/drklee3/YOUtinerary/wiki
