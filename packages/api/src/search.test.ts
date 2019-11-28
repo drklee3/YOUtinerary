@@ -22,8 +22,7 @@ describe("search", () => {
             locationbias: "point:37.7757044,-122.4345857",
         };
 
-        const res = await searchLocation(request);
-        const { json } = res;
+        const json = await searchLocation(request);
 
         console.log(JSON.stringify(json, null, 4));
 
@@ -42,8 +41,7 @@ describe("search", () => {
             destination: "u dessert story",
         };
 
-        const res = await searchRoute(request);
-        const { json } = res;
+        const json = await searchRoute(request);
 
         /* eslint-disable @typescript-eslint/camelcase */
         const expectedWaypoints = [
@@ -61,6 +59,6 @@ describe("search", () => {
         /* eslint-enable */
 
         expect(json.geocoded_waypoints).toEqual(expectedWaypoints);
-        console.log(JSON.stringify(res.json, null, 4));
+        console.log(JSON.stringify(json, null, 4));
     });
 });
