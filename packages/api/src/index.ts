@@ -3,6 +3,7 @@ import Router from "@koa/router";
 import Koa from "koa";
 import bodyParser from "koa-bodyparser";
 import logger from "koa-logger";
+import Cache from "./cache";
 import Config from "./config";
 import { searchLocation, searchRoute } from "./search";
 
@@ -13,20 +14,32 @@ const koaInterface = process.env.interface || "127.0.0.1";
 const koaPort = parseInt(process.env.port || "3000");
 
 function main(): void {
+    const cache = new Cache();
+
     router.get("/", (ctx) => {
         ctx.body = "Hello Koa";
     });
 
     router.post("/locations", async (ctx) => {
         const request = ctx.request.body;
+        const cachedReq = cache.get(JSON.stringify(request));
 
-        ctx.body = await searchLocation(request);
+        if (cachedReq) {
+            ctx.body = cachedReq;
+        } else {
+            ctx.body = await searchLocation(request);
+        }
     });
 
     router.post("/routes", async (ctx) => {
         const request = ctx.request.body;
+        const cachedReq = cache.get(JSON.stringify(request));
 
-        ctx.body = await searchRoute(request);
+        if (cachedReq) {
+            ctx.body = cachedReq;
+        } else {
+            ctx.body = await searchRoute(request);
+        }
     });
 
     app.use(logger())
