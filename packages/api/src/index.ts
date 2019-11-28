@@ -25,6 +25,7 @@ function main(): void {
         const cachedReq = cache.get(JSON.stringify(request));
 
         if (cachedReq) {
+            console.info("Found cached location query");
             ctx.body = cachedReq;
         } else {
             ctx.body = await searchLocation(request);
@@ -36,6 +37,7 @@ function main(): void {
         const cachedReq = cache.get(JSON.stringify(request));
 
         if (cachedReq) {
+            console.info("Found cached route query");
             ctx.body = cachedReq;
         } else {
             ctx.body = await searchRoute(request);
