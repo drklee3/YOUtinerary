@@ -20,7 +20,7 @@ export async function searchLocation(
 ): Promise<FindPlaceFromTextResponse> {
     const res = await axios.post(API_LOCATIONS_ENDPOINT, request);
     console.log(JSON.stringify(res));
-    return res.data.json;
+    return res.data;
 }
 
 export async function searchRoute(

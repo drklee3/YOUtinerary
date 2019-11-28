@@ -1,3 +1,4 @@
+import { DirectionsResponse } from "@google/maps";
 import GoogleMapReact from "google-map-react";
 import React from "react";
 import EventData from "../itinerary/EventData";
@@ -8,7 +9,7 @@ const defaultMapOptions = {
         lat: 37.349258,
         lng: -121.941026,
     },
-    zoom: 12,
+    zoom: 13,
 };
 
 const getMapBounds = (
@@ -21,10 +22,10 @@ const getMapBounds = (
 
     events.forEach((event) => {
         if (!event.mapsData || !event.mapsData.geometry) {
-            locations++;
             return;
         }
 
+        locations++;
         bounds.extend(
             new maps.LatLng(
                 event.mapsData.geometry.location.lat,
@@ -32,6 +33,8 @@ const getMapBounds = (
             )
         );
     });
+
+    console.log(`Map bounds created with ${locations} locations`);
 
     if (locations === 1) {
         return;
@@ -47,38 +50,86 @@ const getMapBounds = (
     return bounds;
 };
 
-const bindResizeListener = (
-    map: google.maps.Map,
-    maps: typeof google.maps,
-    bounds?: google.maps.LatLngBounds
-): void => {
-    maps.event.addDomListenerOnce(map, "idle", () => {
-        maps.event.addDomListener(window, "resize", () => {
-            if (bounds) {
-                map.fitBounds(bounds);
-            }
-        });
-    });
-};
-
-const handleApiLoaded = (
-    map: google.maps.Map,
-    maps: typeof google.maps,
-    events: EventData[]
-): void => {
-    const bounds = getMapBounds(map, maps, events);
-
-    if (bounds) {
-        map.fitBounds(bounds);
-    }
-    // bindResizeListener(map, maps, bounds);
-};
-
 interface MapViewProps {
     events: EventData[];
+    route?: DirectionsResponse;
 }
 
-class MapView extends React.Component<MapViewProps> {
+interface MapViewState {
+    map?: google.maps.Map;
+    maps?: typeof google.maps;
+    polyline?: google.maps.Polyline;
+}
+
+class MapView extends React.Component<MapViewProps, MapViewState> {
+    state = {
+        map: undefined,
+        maps: undefined,
+        polyline: undefined,
+    };
+
+    static getDerivedStateFromProps(
+        props: MapViewProps,
+        state: MapViewState
+    ): MapViewState | null {
+        const { route } = props;
+        const { map, maps } = state;
+
+        if (!route || !route.routes || route.routes.length === 0) {
+            console.log("No route, not creating polyline");
+            return null;
+        }
+
+        if (!map || !maps) {
+            console.error("map or maps isn't defined");
+            return null;
+        }
+
+        const decodedPolyline = maps.geometry.encoding.decodePath(
+            route.routes[0].overview_polyline.points
+        );
+
+        const polyline = new maps.Polyline({
+            path: decodedPolyline,
+            strokeColor: "#1890ff",
+            map,
+        });
+
+        console.log("Updated new route with polyline:", polyline);
+
+        return { polyline };
+    }
+
+    handleApiLoaded = (
+        map: google.maps.Map,
+        maps: typeof google.maps,
+        events: EventData[]
+    ): void => {
+        const bounds = getMapBounds(map, maps, events);
+
+        if (bounds) {
+            map.fitBounds(bounds);
+        }
+
+        // bindResizeListener(map, maps, bounds);
+        this.setState({ map, maps });
+    };
+
+    bindResizeListener = (
+        map: google.maps.Map,
+        maps: typeof google.maps
+    ): void => {
+        maps.event.addDomListenerOnce(map, "idle", () => {
+            maps.event.addDomListener(window, "resize", () => {
+                const bounds = getMapBounds(map, maps, this.props.events);
+
+                if (bounds) {
+                    map.fitBounds(bounds);
+                }
+            });
+        });
+    };
+
     render(): JSX.Element {
         const { events } = this.props;
         const eventsWithLocation = events.filter(
@@ -99,13 +150,14 @@ class MapView extends React.Component<MapViewProps> {
                 <GoogleMapReact
                     bootstrapURLKeys={{
                         key: process.env.GATSBY_GOOGLE_API_KEY,
+                        libraries: "geometry",
                     }}
                     resetBoundsOnResize={true}
                     defaultCenter={defaultMapOptions.center}
                     defaultZoom={defaultMapOptions.zoom}
                     yesIWantToUseGoogleMapApiInternals={true}
                     onGoogleApiLoaded={({ map, maps }) =>
-                        handleApiLoaded(map, maps, eventsWithLocation)
+                        this.handleApiLoaded(map, maps, eventsWithLocation)
                     }
                     hoverDistance={20}
                 >

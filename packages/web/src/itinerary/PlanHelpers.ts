@@ -8,7 +8,11 @@
  * raised.
  */
 
-import { PlaceSearchResult } from "@google/maps";
+import {
+    DirectionsRequest,
+    LatLngLiteral,
+    PlaceSearchResult,
+} from "@google/maps";
 import EventData from "./EventData";
 
 export function addEvent(events: EventData[]): EventData[] {
@@ -133,4 +137,28 @@ export function editEventMapsData(
     mapsData?: Partial<PlaceSearchResult>
 ): EventData[] {
     return editEventField(events, id, "mapsData", mapsData);
+}
+
+export function getWayPoints(events: EventData[]): LatLngLiteral[] {
+    // stupid way to filter out events without coords
+    // https://github.com/microsoft/TypeScript/issues/16069
+    return events
+        .map(
+            (e) => e.mapsData?.geometry?.location || { lat: 12345, lng: 12345 }
+        )
+        .filter((e) => e.lat !== 12345);
+}
+
+export function getDirectionsRequest(
+    coords: LatLngLiteral[]
+): DirectionsRequest | undefined {
+    if (coords.length < 2) {
+        return;
+    }
+
+    return {
+        origin: coords.splice(0, 1)[0], // first element & remove
+        destination: coords.pop()!, // last element & remove
+        waypoints: coords, // middle elements
+    };
 }
