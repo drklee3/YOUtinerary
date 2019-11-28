@@ -17,5 +17,7 @@ COPY packages/typescript packages/typescript/
 # Build
 RUN yarn api:build
 
+EXPOSE 3000
+
 WORKDIR /youtinerary/packages/api
 CMD ["node", "dist/index.js"]
