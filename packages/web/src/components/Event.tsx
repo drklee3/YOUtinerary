@@ -155,11 +155,13 @@ class Event extends React.Component<Props, State> {
         this.setState({
             searching: false,
             searchErrored:
-                res.status && !["OK", "ZERO_RESULTS"].includes(res.status),
+                res &&
+                res.status &&
+                !["OK", "ZERO_RESULTS"].includes(res.status),
+            locationResults: res,
         });
 
         console.log(res);
-        this.setState({ locationResults: res });
     };
 
     // modal functions

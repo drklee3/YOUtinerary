@@ -1,5 +1,6 @@
-import { PlaceSearchResult } from "@google/maps";
+import { DirectionsResponse, PlaceSearchResult } from "@google/maps";
 import { Button, Card, Col, Empty, Row, Typography } from "antd";
+import * as _ from "lodash";
 import QueueAnim from "rc-queue-anim";
 import React from "react";
 import {
@@ -12,6 +13,7 @@ import {
     ResponderProvided,
 } from "react-beautiful-dnd";
 import MapView from "../components/MapView";
+import { searchRoute } from "../itinerary/api";
 import EventData from "../itinerary/EventData";
 import {
     addEvent,
@@ -22,6 +24,8 @@ import {
     editEventName,
     editEventStart,
     editEventUserLocation,
+    getDirectionsRequest,
+    getWayPoints,
     removeEvent,
     reorderEvent,
 } from "../itinerary/PlanHelpers";
@@ -87,12 +91,16 @@ export interface Data {
 interface State {
     data: Data;
     events: EventData[];
+    searchingRoute: boolean;
+    route?: DirectionsResponse;
 }
 
 export class Plan extends React.Component<{}, State> {
     state: State = {
         data: { title: "Your Plan" },
         events: [],
+        searchingRoute: false,
+        route: undefined,
     };
 
     constructor(props: {}) {
@@ -116,10 +124,42 @@ export class Plan extends React.Component<{}, State> {
         });
     }
 
-    componentDidUpdate(): void {
+    async componentDidUpdate({}, prevState: State): Promise<void> {
         // update persistent data store
         savePlan(this.state.events);
         saveData(this.state.data);
+
+        // check if should fetch new route
+        const prevWaypoints = getWayPoints(prevState.events);
+        const currWaypoints = getWayPoints(this.state.events);
+
+        console.log(
+            `Comparing waypoints:\nbefore:\n${JSON.stringify(
+                prevWaypoints
+            )}\nafter:\n${JSON.stringify(currWaypoints)}`
+        );
+
+        if (_.isEqual(prevWaypoints, currWaypoints)) {
+            console.log("No waypoint changes, not fetching directions");
+            return;
+        }
+
+        // checks if >= 2
+        const req = getDirectionsRequest(currWaypoints);
+
+        console.log("Searching route with request:", req);
+
+        if (!req) {
+            return;
+        }
+
+        // async so this could happen later, should use callback but oh well who cares
+        this.setState({ searchingRoute: true });
+
+        const route = await searchRoute(req);
+        console.log("Route fetched:", route);
+
+        this.setState({ route, searchingRoute: false });
     }
 
     onChangeTitle = (title: string): void => {
@@ -127,8 +167,6 @@ export class Plan extends React.Component<{}, State> {
     };
 
     onDragEnd = (result: DropResult, provided: ResponderProvided): void => {
-        console.log(result, provided);
-
         if (!result.destination) {
             return;
         }
@@ -296,7 +334,10 @@ export class Plan extends React.Component<{}, State> {
                     </div>
                 </Col>
                 <Col xs={24} sm={24} md={24} lg={12}>
-                    <MapView events={this.state.events} />
+                    <MapView
+                        events={this.state.events}
+                        route={this.state.route}
+                    />
                 </Col>
             </Row>
         );
