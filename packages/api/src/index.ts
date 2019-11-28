@@ -20,23 +20,13 @@ function main(): void {
     router.post("/locations", async (ctx) => {
         const request = ctx.request.body;
 
-        try {
-            ctx.body = await searchLocation(request);
-        } catch (e) {
-            ctx.body = { status: "ERROR", message: e };
-            ctx.status = 500;
-        }
+        ctx.body = await searchLocation(request);
     });
 
     router.post("/routes", async (ctx) => {
         const request = ctx.request.body;
 
-        try {
-            ctx.body = await searchRoute(request);
-        } catch (e) {
-            ctx.body = { status: "ERROR", message: e };
-            ctx.status = 500;
-        }
+        ctx.body = await searchRoute(request);
     });
 
     app.use(logger())
@@ -53,6 +43,7 @@ function main(): void {
                 // will only respond with JSON
                 ctx.status = err.statusCode || err.status || 500;
                 ctx.body = {
+                    status: "ERROR",
                     message: err.message,
                 };
             }
