@@ -1,6 +1,6 @@
 {
     "name": "@youtinerary/api",
-    "version": "0.2.0",
+    "version": "0.3.0",
     "description": "Backend API server for YOUtinerary",
     "repository": "https://github.com/drklee3/YOUtinerary.git",
     "author": "Derrick Lee <derrick@dlee.dev>",
