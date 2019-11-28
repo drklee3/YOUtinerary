@@ -22,7 +22,6 @@ import {
     editEventName,
     editEventStart,
     editEventUserLocation,
-    removeAllEvents,
     removeEvent,
     reorderEvent,
 } from "../itinerary/PlanHelpers";
@@ -191,7 +190,7 @@ export class Plan extends React.Component<{}, State> {
     };
 
     removeAllEvents = (): void => {
-        this.setState({ events: removeAllEvents(this.state.events) });
+        this.setState({ events: [] });
     };
 
     render(): JSX.Element {
