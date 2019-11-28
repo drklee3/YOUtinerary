@@ -22,25 +22,34 @@ function main(): void {
 
     router.post("/locations", async (ctx) => {
         const request = ctx.request.body;
-        const cachedReq = cache.get(JSON.stringify(request));
+        const cacheKey = JSON.stringify(request);
+
+        const cachedReq = cache.get(cacheKey);
 
         if (cachedReq) {
-            console.info("Found cached location query");
+            console.log("Found cached location query");
             ctx.body = cachedReq;
         } else {
-            ctx.body = await searchLocation(request);
+            console.log("Querying Google location");
+            const res = await searchLocation(request);
+            cache.insert(cacheKey, res);
+            ctx.body = res;
         }
     });
 
     router.post("/routes", async (ctx) => {
         const request = ctx.request.body;
-        const cachedReq = cache.get(JSON.stringify(request));
+        const cacheKey = JSON.stringify(request);
+        const cachedReq = cache.get(cacheKey);
 
         if (cachedReq) {
-            console.info("Found cached route query");
+            console.log("Found cached route query");
             ctx.body = cachedReq;
         } else {
-            ctx.body = await searchRoute(request);
+            console.log("Querying Google route");
+            const res = await searchRoute(request);
+            cache.insert(cacheKey, res);
+            ctx.body = res;
         }
     });
 
