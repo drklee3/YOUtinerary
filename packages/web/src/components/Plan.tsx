@@ -1,5 +1,5 @@
 import { DirectionsResponse, PlaceSearchResult } from "@google/maps";
-import { Button, Card, Col, Empty, Row, Typography } from "antd";
+import { Button, Card, Col, Empty, Icon, Row, Tooltip, Typography } from "antd";
 import * as _ from "lodash";
 import QueueAnim from "rc-queue-anim";
 import React from "react";
@@ -227,6 +227,10 @@ export class Plan extends React.Component<{}, State> {
         this.setState({ events: removeEvent(this.state.events, id) });
     };
 
+    removeAllEvents = (): void => {
+        this.setState({ events: [] });
+    };
+
     render(): JSX.Element {
         return (
             <Row
@@ -259,6 +263,15 @@ export class Plan extends React.Component<{}, State> {
                                 width: "100%",
                                 minHeight: "100%",
                             }}
+                            extra={
+                                <Tooltip title="Delete all events">
+                                    <Icon
+                                        type="close-circle"
+                                        theme="twoTone"
+                                        onClick={this.removeAllEvents}
+                                    />
+                                </Tooltip>
+                            }
                         >
                             {this.state.events.length > 0 ? (
                                 <>
