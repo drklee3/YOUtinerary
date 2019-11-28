@@ -35,6 +35,10 @@ export function removeEvent(events: EventData[], id: number): EventData[] {
     return events.filter((e) => e.id !== id);
 }
 
+export function removeAllEvents(events: EventData[]): EventData[] {
+    return events.filter(() => false);
+}
+
 export function findEventIndex(events: EventData[], id: number): number {
     return events.findIndex((e) => e.id === id);
 }

@@ -1,5 +1,5 @@
 import { PlaceSearchResult } from "@google/maps";
-import { Button, Card, Col, Empty, Row, Typography } from "antd";
+import { Button, Card, Col, Empty, Icon, Row, Tooltip, Typography } from "antd";
 import QueueAnim from "rc-queue-anim";
 import React from "react";
 import {
@@ -22,6 +22,7 @@ import {
     editEventName,
     editEventStart,
     editEventUserLocation,
+    removeAllEvents,
     removeEvent,
     reorderEvent,
 } from "../itinerary/PlanHelpers";
@@ -189,6 +190,10 @@ export class Plan extends React.Component<{}, State> {
         this.setState({ events: removeEvent(this.state.events, id) });
     };
 
+    removeAllEvents = (): void => {
+        this.setState({ events: removeAllEvents(this.state.events) });
+    };
+
     render(): JSX.Element {
         return (
             <Row
@@ -221,6 +226,15 @@ export class Plan extends React.Component<{}, State> {
                                 width: "100%",
                                 minHeight: "100%",
                             }}
+                            extra={
+                                <Tooltip title="Delete all events">
+                                    <Icon
+                                        type="close-circle"
+                                        theme="twoTone"
+                                        onClick={this.removeAllEvents}
+                                    />
+                                </Tooltip>
+                            }
                         >
                             {this.state.events.length > 0 ? (
                                 <>
