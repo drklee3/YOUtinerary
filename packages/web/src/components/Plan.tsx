@@ -107,6 +107,7 @@ export class Plan extends React.Component<{}, State> {
             console.log("Restored plan from browser");
         }
 
+        // if no restored state, use an empty plan and default title
         this.setState({
             data: restoredData
                 ? { title: restoredData.title }

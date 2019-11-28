@@ -1,6 +1,7 @@
 import GoogleMapReact from "google-map-react";
 import React from "react";
 import EventData from "../itinerary/EventData";
+import Marker from "./Marker";
 
 const defaultMapOptions = {
     center: {
@@ -31,6 +32,10 @@ const getMapBounds = (
             )
         );
     });
+
+    if (locations === 1) {
+        return;
+    }
 
     // fallback to current default bounds
     if (locations === 0) {
@@ -66,7 +71,7 @@ const handleApiLoaded = (
     if (bounds) {
         map.fitBounds(bounds);
     }
-    bindResizeListener(map, maps, bounds);
+    // bindResizeListener(map, maps, bounds);
 };
 
 interface MapViewProps {
@@ -86,6 +91,8 @@ class MapView extends React.Component<MapViewProps> {
             return <div>Invalid Key</div>;
         }
 
+        console.log(eventsWithLocation);
+
         return (
             // Important! Always set the container height explicitly
             <div style={{ height: "100%", width: "100%" }}>
@@ -93,15 +100,22 @@ class MapView extends React.Component<MapViewProps> {
                     bootstrapURLKeys={{
                         key: process.env.GATSBY_GOOGLE_API_KEY,
                     }}
+                    resetBoundsOnResize={true}
                     defaultCenter={defaultMapOptions.center}
                     defaultZoom={defaultMapOptions.zoom}
                     yesIWantToUseGoogleMapApiInternals={true}
                     onGoogleApiLoaded={({ map, maps }) =>
                         handleApiLoaded(map, maps, eventsWithLocation)
                     }
+                    hoverDistance={20}
                 >
                     {eventsWithLocation.map((event) => (
-                        <div key={event.id}></div>
+                        <Marker
+                            key={event.id}
+                            event={event}
+                            lat={event.mapsData?.geometry?.location.lat}
+                            lng={event.mapsData?.geometry?.location.lng}
+                        />
                     ))}
                 </GoogleMapReact>
             </div>
