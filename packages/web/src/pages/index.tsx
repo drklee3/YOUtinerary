@@ -49,7 +49,6 @@ const IndexPage = (): JSX.Element => (
                         </TweenOne>
                     </Link>
                 </Col>
-                <Col span={12}></Col>
             </Row>
         </Layout>
         <img
