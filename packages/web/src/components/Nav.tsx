@@ -1,4 +1,4 @@
-import { Button, Menu } from "antd";
+import { Menu } from "antd";
 import { ClickParam } from "antd/lib/menu";
 import { navigate } from "gatsby";
 import React from "react";
@@ -17,7 +17,9 @@ class Nav extends React.Component<Props> {
 
     render(): JSX.Element {
         const { location = "/" } = this.props;
-        console.log(this.props);
+
+        // Since we don't want to explicitly hardcode in the default background
+        const menuProps = location === "/" ? { background: "none" } : undefined;
 
         return (
             <Menu
@@ -26,6 +28,8 @@ class Nav extends React.Component<Props> {
                 selectedKeys={[location]}
                 style={{
                     lineHeight: "64px",
+                    borderBottom: "none",
+                    ...menuProps,
                 }}
             >
                 <Menu.Item
@@ -35,14 +39,14 @@ class Nav extends React.Component<Props> {
                 >
                     <b>YOUtinerary</b>
                 </Menu.Item>
-                <Menu.Item
-                    key="/plan"
-                    style={{ float: "right", border: "none" }}
-                    onClick={() => navigate("/plan")}
-                >
-                    <Button type="primary" shape="round" size="large">
-                        Plan A Trip
-                    </Button>
+                <Menu.Item key="/github" style={{ float: "right" }}>
+                    <a
+                        href="https://github.com/drklee3/YOUtinerary"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        GitHub
+                    </a>
                 </Menu.Item>
                 <Menu.Item
                     key="/about"

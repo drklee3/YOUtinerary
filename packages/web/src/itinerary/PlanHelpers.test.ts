@@ -6,6 +6,7 @@ import {
     editEventStart,
     findEvent,
     removeEvent,
+    reorderEvent,
 } from "./PlanHelpers";
 
 export function newPlan(): EventData[] {
@@ -78,5 +79,12 @@ describe("plan", () => {
 
         const e = findEvent(plan, 1);
         expect(e).toEqual(plan[1]);
+    });
+
+    it("should correctly reorder events", () => {
+        const plan = newPlan();
+
+        const reorderedPlan = reorderEvent(plan, 1, 2);
+        expect(reorderedPlan.map((e) => e.id)).toEqual([0, 2, 1]);
     });
 });

@@ -33,7 +33,15 @@ export function restorePlan(): EventData[] | undefined {
         const plan = JSON.parse(rawPlan);
         return plan.map(
             (e: EventDataInterface) =>
-                new EventData(e.id, e.name, new Date(e.start), new Date(e.end))
+                new EventData(
+                    e.id,
+                    e.name,
+                    new Date(e.start),
+                    new Date(e.end),
+                    e.description,
+                    e.userLocation,
+                    e.mapsData
+                )
         );
     } catch (e) {
         return undefined;

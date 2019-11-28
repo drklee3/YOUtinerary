@@ -1,17 +1,33 @@
+import { PlaceSearchResult } from "@google/maps";
+
 export interface EventDataInterface {
     id: number;
     name: string;
+    description?: string;
     start: Date;
     end: Date;
+    userLocation?: string;
+    mapsData?: Partial<PlaceSearchResult>;
 }
 
 export class EventData implements EventDataInterface {
     private _id: number;
     private _name: string;
+    private _description?: string;
     private _start: Date;
     private _end: Date;
+    private _userLocation?: string;
+    private _mapsData?: Partial<PlaceSearchResult>;
 
-    constructor(id: number, name: string, start: Date, end: Date) {
+    constructor(
+        id: number,
+        name: string,
+        start: Date,
+        end: Date,
+        description?: string,
+        userLocation?: string,
+        mapsData?: Partial<PlaceSearchResult>
+    ) {
         // default data
         this._id = id;
         this._name = name;
@@ -21,14 +37,21 @@ export class EventData implements EventDataInterface {
 
         this._start = flipped ? end : start;
         this._end = flipped ? start : end;
+
+        this._description = description;
+        this._userLocation = userLocation;
+        this._mapsData = mapsData;
     }
 
     public toJSON(): EventDataInterface {
         return {
             id: this._id,
             name: this._name,
+            description: this._description,
             start: this._start,
             end: this._end,
+            userLocation: this._userLocation,
+            mapsData: this._mapsData,
         };
     }
 
@@ -48,6 +71,14 @@ export class EventData implements EventDataInterface {
         this._name = name;
     }
 
+    get description(): string | undefined {
+        return this._description;
+    }
+
+    set description(description: string | undefined) {
+        this._description = description;
+    }
+
     get start(): Date {
         return this._start;
     }
@@ -64,11 +95,25 @@ export class EventData implements EventDataInterface {
         this._end = end;
     }
 
-    /**
-     * Gets duration of event in milliseconds
-     */
     get duration(): number {
+        // duration in ms
         return this._end.getTime() - this._start.getTime();
+    }
+
+    get userLocation(): EventDataInterface["userLocation"] {
+        return this._userLocation;
+    }
+
+    set userLocation(userLocation: EventDataInterface["userLocation"]) {
+        this._userLocation = userLocation;
+    }
+
+    get mapsData(): EventDataInterface["mapsData"] {
+        return this._mapsData;
+    }
+
+    set mapsData(data: EventDataInterface["mapsData"]) {
+        this._mapsData = data;
     }
 }
 

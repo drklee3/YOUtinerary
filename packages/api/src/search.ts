@@ -1,10 +1,11 @@
 import Maps, {
-    FindPlaceRequest,
-    FindPlaceFromTextResponse,
     ClientResponse,
     DirectionsRequest,
     DirectionsResponse,
+    FindPlaceFromTextResponse,
+    FindPlaceRequest,
 } from "@google/maps";
+import { union } from "lodash";
 import Config from "./config";
 
 const MapsClient = Maps.createClient({
@@ -15,21 +16,20 @@ const MapsClient = Maps.createClient({
 export function searchLocation(
     request: FindPlaceRequest
 ): Promise<ClientResponse<FindPlaceFromTextResponse>> {
-    // default request parameters if not provided
-    if (!request.fields) {
-        request.fields = [
-            "formatted_address",
-            "geometry",
-            "icon",
-            "name",
-            "opening_hours",
-            "permanently_closed",
-            "photos",
-            "price_level",
-            "rating",
-            "types",
-        ];
-    }
+    // add required default request parameters if not provided
+    request.fields = union(request.fields, [
+        "place_id",
+        "formatted_address",
+        "geometry",
+        "icon",
+        "name",
+        "opening_hours",
+        "permanently_closed",
+        "photos",
+        "price_level",
+        "rating",
+        "types",
+    ]);
 
     if (!request.language) {
         request.language = "en";

@@ -1,3 +1,14 @@
+/**
+ * IMPORTANT NOTE: These functions are used to modify event arrays that are
+ * stored in React state.  We do NOT want to mutate the state directly without
+ * setState() as it could potentially lead to error prone code.  Since arrays
+ * are passed by "reference," be sure to make a copy via spread operator or
+ * slice() before modifying the array.  This does use more memory as we are
+ * making array copies but it is more important to avoid errors that could be
+ * raised.
+ */
+
+import { PlaceSearchResult } from "@google/maps";
 import EventData from "./EventData";
 
 export function addEvent(events: EventData[]): EventData[] {
@@ -5,8 +16,19 @@ export function addEvent(events: EventData[]): EventData[] {
     const nextId = Math.max(...events.map((event) => event.id), -1) + 1;
     const newEvent = new EventData(nextId, "New Event", new Date(), new Date());
 
-    events.push(newEvent);
-    return events;
+    return [...events, newEvent];
+}
+
+export function reorderEvent(
+    events: EventData[],
+    startIndex: number,
+    endIndex: number
+): EventData[] {
+    const result = [...events];
+    const [removed] = result.splice(startIndex, 1);
+    result.splice(endIndex, 0, removed);
+
+    return result;
 }
 
 export function removeEvent(events: EventData[], id: number): EventData[] {
@@ -41,14 +63,16 @@ export function editEvent(
         return events;
     }
 
-    events[index] = modifiedEvent;
-    return events;
+    const result = [...events];
+
+    result[index] = modifiedEvent;
+    return result;
 }
 
 function editEventField(
     events: EventData[],
     id: number,
-    key: "name" | "start" | "end",
+    key: "name" | "description" | "start" | "end" | "userLocation" | "mapsData",
     value: any
 ): EventData[] {
     const index = findEventIndex(events, id);
@@ -57,8 +81,10 @@ function editEventField(
         return events;
     }
 
-    events[index][key] = value;
-    return events;
+    const result = [...events];
+
+    result[index][key] = value;
+    return result;
 }
 
 export function editEventName(
@@ -67,6 +93,14 @@ export function editEventName(
     name: string
 ): EventData[] {
     return editEventField(events, id, "name", name);
+}
+
+export function editEventDescription(
+    events: EventData[],
+    id: number,
+    description: string
+): EventData[] {
+    return editEventField(events, id, "description", description);
 }
 
 export function editEventStart(
@@ -83,4 +117,20 @@ export function editEventEnd(
     end: Date
 ): EventData[] {
     return editEventField(events, id, "end", end);
+}
+
+export function editEventUserLocation(
+    events: EventData[],
+    id: number,
+    userLocation: string
+): EventData[] {
+    return editEventField(events, id, "userLocation", userLocation);
+}
+
+export function editEventMapsData(
+    events: EventData[],
+    id: number,
+    mapsData?: Partial<PlaceSearchResult>
+): EventData[] {
+    return editEventField(events, id, "mapsData", mapsData);
 }

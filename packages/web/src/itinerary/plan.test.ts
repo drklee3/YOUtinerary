@@ -1,4 +1,4 @@
-import Event from "./event";
+import Event from "./EventData";
 import Plan from "./plan";
 
 const now = new Date();
