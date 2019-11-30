@@ -45,4 +45,14 @@ export default class Cache {
 
         return;
     }
+
+    public gc(): void {
+        const now = new Date().getTime();
+
+        this.cache.forEach((val, key) => {
+            if (val.created + val.ttl > now) {
+                this.cache.delete(key);
+            }
+        });
+    }
 }
