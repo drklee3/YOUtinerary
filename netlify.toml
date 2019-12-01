@@ -1,5 +1,3 @@
-[build]
-  ignore = "git diff --quiet HEAD^ HEAD packages/web/"
 [[redirects]]
   from = "https://youtinerary.netlify.com/*"
   to = "https://youtinerary.dlee.dev/:splat"
