@@ -19,7 +19,6 @@ export async function searchLocation(
     request: FindPlaceRequest
 ): Promise<FindPlaceFromTextResponse> {
     request.locationbias = "circle:1610@37.3496, -121.939";
-    console.log(JSON.stringify(request));
     const res = await axios.post(API_LOCATIONS_ENDPOINT, request);
     console.log(JSON.stringify(res));
     return res.data;
