@@ -38,6 +38,9 @@ export async function searchLocation(
         request.inputtype = "textquery";
     }
 
+    if (!request.locationbias) {
+        request.locationbias = "point:37.3492264,-121.9371648";
+    }
     const res = await MapsClient.findPlace(request).asPromise();
     return res.json;
 }
