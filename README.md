@@ -8,7 +8,10 @@
 [![Language grade: JavaScript](https://img.shields.io/lgtm/grade/javascript/g/drklee3/YOUtinerary.svg?logo=lgtm&logoWidth=18&style=flat-square)](https://lgtm.com/projects/g/drklee3/YOUtinerary/context:javascript)
 
 Web application that provides easy scheduling and visual overviews of trips.
-Project for CSCI 187: Design and Management of Software at SCU.
+Project for CSCI 187: Design and Management of Software at SCU. YOUtinerary is
+available at [YOUtinerary.dlee.dev](https://youtinerary.dlee.dev/).
+
+## Development
 
 To get started developing on or to run YOUtinerary, follow the wiki pages below.
 
@@ -19,7 +22,11 @@ To get started developing on or to run YOUtinerary, follow the wiki pages below.
 -   [Contributing](https://github.com/drklee3/YOUtinerary/wiki/Contributing)
 -   [Troubleshooting](https://github.com/drklee3/YOUtinerary/wiki/Troubleshooting)
 
-To learn more about YOUtinerary, the following wiki pages provide high level descriptions and motivations for the technology stack and information about other technology used.
+## Learn More
+
+To learn more about YOUtinerary, the following wiki pages provide high level
+descriptions and motivations for the technology stack and information about
+other technology used.
 
 -   [Project Structure](https://github.com/drklee3/YOUtinerary/wiki/Structure)
 -   [Packages](https://github.com/drklee3/YOUtinerary/wiki/Packages)
