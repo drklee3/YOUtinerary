@@ -10,6 +10,24 @@
 Web application that provides easy scheduling and visual overviews of trips.
 Project for CSCI 187: Design and Management of Software at SCU.
 
-Please refer to the [wiki] for more documentation.
+To get started developing on or to run YOUtinerary, follow the wiki pages below.
 
-[wiki]: https://github.com/drklee3/YOUtinerary/wiki
+-   [Install dependencies](https://github.com/drklee3/YOUtinerary/wiki/Dependencies)
+-   [Installation](https://github.com/drklee3/YOUtinerary/wiki/Installation)
+-   [Running](https://github.com/drklee3/YOUtinerary/wiki/Running)
+-   [Testing](https://github.com/drklee3/YOUtinerary/wiki/Testing)
+-   [Contributing](https://github.com/drklee3/YOUtinerary/wiki/Contributing)
+-   [Troubleshooting](https://github.com/drklee3/YOUtinerary/wiki/Troubleshooting)
+
+To learn more about YOUtinerary, the following wiki pages provide high level descriptions and motivations for the technology stack and information about other technology used.
+
+-   [Project Structure](https://github.com/drklee3/YOUtinerary/wiki/Structure)
+-   [Packages](https://github.com/drklee3/YOUtinerary/wiki/Packages)
+-   [Technologies and Libraries](https://github.com/drklee3/YOUtinerary/wiki/Technologies-and-Libraries)
+-   [Development Tools](https://github.com/drklee3/YOUtinerary/wiki/Development-Tools)
+-   [Deployment](https://github.com/drklee3/YOUtinerary/wiki/Deployment)
+-   [Infrastructure](https://github.com/drklee3/YOUtinerary/wiki/Infrastructure)
+
+## License
+
+MIT.
