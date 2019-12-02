@@ -20,6 +20,12 @@ export function addEvent(events: EventData[]): EventData[] {
     const nextId = Math.max(...events.map((event) => event.id), -1) + 1;
     const newEvent = new EventData(nextId, "New Event", new Date(), new Date());
 
+    if (startIndex < endIndex) {
+        const tempStart = result[startIndex - 1].start;
+        const tempEnd = result[startIndex - 1].end;
+        editEventStart(result, endIndex, tempStart);
+        editEventEnd(result, endIndex, tempEnd);
+    }
     return [...events, newEvent];
 }
 
