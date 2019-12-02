@@ -109,6 +109,21 @@ export class Plan extends React.Component<{}, State> {
         // Using default constructor
         this.state.events.push(data);
 
+        this.state = {
+            data: { title: "Your Plan" },
+            events: [
+                new EventData(
+                    1,
+                    "Tutorial",
+                    new Date("1:53"),
+                    new Date(Date.now()),
+                    "This is an example event! You can add or change descriptions and titles by clicking the edit button at the side. + search help when it's implemented, etc. etc."
+                ),
+            ],
+            searchingRoute: false,
+            route: undefined,
+        };
+
         // Using direct assignment
         this.state.events = [
             new EventData(
