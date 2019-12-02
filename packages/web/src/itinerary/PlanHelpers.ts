@@ -19,13 +19,6 @@ export function addEvent(events: EventData[]): EventData[] {
     // Max of event ids + 1
     const nextId = Math.max(...events.map((event) => event.id), -1) + 1;
     const newEvent = new EventData(nextId, "New Event", new Date(), new Date());
-
-    if (startIndex < endIndex) {
-        const tempStart = result[startIndex - 1].start;
-        const tempEnd = result[startIndex - 1].end;
-        editEventStart(result, endIndex, tempStart);
-        editEventEnd(result, endIndex, tempEnd);
-    }
     return [...events, newEvent];
 }
 
@@ -34,9 +27,25 @@ export function reorderEvent(
     startIndex: number,
     endIndex: number
 ): EventData[] {
+    // change order of index in events array
     const result = [...events];
     const [removed] = result.splice(startIndex, 1);
     result.splice(endIndex, 0, removed);
+
+    // change order of start/end times
+    const dropDirection = startIndex < endIndex;
+    const beginMove = dropDirection ? startIndex : endIndex;
+    const endMove = dropDirection ? endIndex : startIndex;
+    const tempStart = result[beginMove].start;
+    const tempEnd = result[beginMove].end;
+    for (let eventIndex = beginMove; eventIndex < endMove; eventIndex++) {
+        const nextStart = result[eventIndex + 1].start;
+        const nextEnd = result[eventIndex + 1].end;
+        editEventStart(result, result[eventIndex].id, nextStart);
+        editEventEnd(result, result[eventIndex].id, nextEnd);
+    }
+    editEventStart(result, result[endMove].id, tempStart);
+    editEventEnd(result, result[endMove].id, tempEnd);
 
     return result;
 }
