@@ -193,9 +193,9 @@ export class Plan extends React.Component<{}, State> {
     };
 
     editEventName = (id: number, name: string): void => {
-        this.setState((prevState) => {
-            events: editEventName(prevState.events, id, name);
-        });
+        this.setState((prevState) => ({
+            events: editEventName(prevState.events, id, name),
+        }));
     };
 
     editEventDescription = (id: number, description: string): void => {
