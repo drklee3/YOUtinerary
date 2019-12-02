@@ -3,12 +3,38 @@ import { Button, Card, Col, Empty, Icon, Row, Tooltip, Typography } from "antd";
 import * as _ from "lodash";
 import QueueAnim from "rc-queue-anim";
 import React from "react";
-import { DragDropContext, Draggable, DraggableProvided, Droppable, DroppableProvided, DropResult, ResponderProvided } from "react-beautiful-dnd";
+import {
+    DragDropContext,
+    Draggable,
+    DraggableProvided,
+    Droppable,
+    DroppableProvided,
+    DropResult,
+    ResponderProvided,
+} from "react-beautiful-dnd";
 import MapView from "../components/MapView";
 import { searchRoute } from "../itinerary/api";
 import EventData from "../itinerary/EventData";
-import { addEvent, editEvent, editEventDescription, editEventEnd, editEventMapsData, editEventName, editEventStart, editEventUserLocation, getDirectionsRequest, getWayPoints, removeEvent, reorderEvent } from "../itinerary/PlanHelpers";
-import { restoreData, restorePlan, saveData, savePlan } from "../itinerary/store";
+import {
+    addEvent,
+    editEvent,
+    editEventDescription,
+    editEventEnd,
+    editEventMapsData,
+    editEventName,
+    editEventStart,
+    editEventUserLocation,
+    getDirectionsRequest,
+    getWayPoints,
+    removeEvent,
+    reorderEvent,
+} from "../itinerary/PlanHelpers";
+import {
+    restoreData,
+    restorePlan,
+    saveData,
+    savePlan,
+} from "../itinerary/store";
 import Event from "./Event";
 
 const { Title, Text } = Typography;
@@ -80,7 +106,31 @@ export class Plan extends React.Component<{}, State> {
     constructor(props: {}, data: EventData) {
         super(props);
 
+        // Using default constructor
         this.state.events.push(data);
+
+        // Using direct assignment
+        this.state.events = [
+            new EventData(
+                1,
+                "Tutorial",
+                new Date("1:53"),
+                new Date(Date.now()),
+                "This is an example event! You can add or change descriptions and titles by clicking the edit button at the side. + search help when it's implemented, etc. etc."
+            ),
+        ];
+
+        //Using push
+        this.state.events.push(
+            new EventData(
+                1,
+                "Tutorial",
+                new Date("1:53"),
+                new Date(Date.now()),
+                "This is an example event! You can add or change descriptions and titles by clicking the edit button at the side. + search help when it's implemented, etc. etc."
+            )
+        );
+
         console.log(this.state.events);
     }
 
