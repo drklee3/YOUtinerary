@@ -103,80 +103,34 @@ export class Plan extends React.Component<{}, State> {
         route: undefined,
     };
 
-    constructor(props: {}, data: EventData) {
+    constructor(props: {}) {
         super(props);
+    }
 
-        // Using default constructor
-        this.state.events.push(data);
-
-        //Calling addEvent function
-        addEvent(this.state.events);
-
-        //Using direct state variable assignment
-        this.state = {
-            data: { title: "Your Plan" },
-            events: [
-                new EventData(
-                    1,
-                    "Tutorial",
-                    new Date("1:53"),
-                    new Date(Date.now()),
-                    "This is an example event! You can add or change descriptions and titles by clicking the edit button at the side. + search help when it's implemented, etc. etc."
-                ),
-            ],
-            searchingRoute: false,
-            route: undefined,
-        };
-
-        // Using direct assignment to array
-        this.state.events = [
-            new EventData(
-                1,
-                "Tutorial",
-                new Date("1:53"),
-                new Date(Date.now()),
-                "This is an example event! You can add or change descriptions and titles by clicking the edit button at the side. + search help when it's implemented, etc. etc."
-            ),
-        ];
-
-        //Using push
-        this.state.events.push(
-            new EventData(
-                1,
-                "Tutorial",
-                new Date("1:53"),
-                new Date(Date.now()),
-                "This is an example event! You can add or change descriptions and titles by clicking the edit button at the side. + search help when it's implemented, etc. etc."
-            )
-        );
-
-        //Directly assigning value to index 1
-
-        this.state.events[0] = new EventData(
+    componentDidMount(): void {
+        const restoredData = restoreData();
+        const restoredPlan = restorePlan();
+        const theData = new EventData(
             1,
             "Tutorial",
             new Date("1:53"),
             new Date(Date.now()),
             "This is an example event! You can add or change descriptions and titles by clicking the edit button at the side. + search help when it's implemented, etc. etc."
         );
-        console.log(this.state.events);
-    }
-
-    componentDidMount(): void {
-        const restoredData = restoreData();
-        const restoredPlan = restorePlan();
 
         if (restoredPlan) {
             console.log("Restored plan from browser");
         }
 
-        // if no restored state, use an empty plan and default title
+        // if no restored state, revert to launch tutorial
         this.setState({
             data: restoredData
                 ? { title: restoredData.title }
                 : { title: "Your Plan" },
-            events: restoredPlan ? restoredPlan : [],
+            events: restoredPlan ? restoredPlan : [theData],
         });
+        console.log("The Elements in the Array is" + this.state.events);
+        console.log("The No. of Elements is" + this.state.events.length);
     }
 
     async componentDidUpdate({}, prevState: State): Promise<void> {
