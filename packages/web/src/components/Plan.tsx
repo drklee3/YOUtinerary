@@ -109,6 +109,10 @@ export class Plan extends React.Component<{}, State> {
         // Using default constructor
         this.state.events.push(data);
 
+        //Calling addEvent function
+        addEvent(this.state.events);
+
+        //Using direct state variable assignment
         this.state = {
             data: { title: "Your Plan" },
             events: [
@@ -124,7 +128,7 @@ export class Plan extends React.Component<{}, State> {
             route: undefined,
         };
 
-        // Using direct assignment
+        // Using direct assignment to array
         this.state.events = [
             new EventData(
                 1,
