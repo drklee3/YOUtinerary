@@ -127,12 +127,18 @@ export class Plan extends React.Component<{}, State> {
             data: restoredData
                 ? { title: restoredData.title }
                 : { title: "Your Plan" },
-            events: restoredPlan
-                ? restoredPlan
-                : [...this.state.events, theData],
+            events: restoredPlan ? restoredPlan : [],
+            //events: addEvent(this.state.events),
         });
-        console.log("The Elements in the Array is" + this.state.events);
-        console.log("The No. of Elements is" + this.state.events.length);
+
+        //Pushes to array
+        this.state.events.push(theData);
+        console.log("The EventData is " + theData);
+        console.log("The EventData id is " + theData.id);
+        console.log("The EventData name is " + theData.name);
+        console.log("The EventData description is " + theData.description);
+        console.log("The Elements in the Array is " + this.state.events);
+        console.log("The No. of Elements is " + this.state.events.length);
     }
 
     async componentDidUpdate({}, prevState: State): Promise<void> {
