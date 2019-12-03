@@ -13,7 +13,7 @@ available at [YOUtinerary.dlee.dev](https://youtinerary.dlee.dev/).
 
 ## Development
 
-To get started developing on or to run YOUtinerary, follow the wiki pages below.
+To get started developing on or to run a local instance of YOUtinerary, follow the wiki pages below.
 
 -   [Install dependencies](https://github.com/drklee3/YOUtinerary/wiki/Dependencies)
 -   [Installation](https://github.com/drklee3/YOUtinerary/wiki/Installation)
