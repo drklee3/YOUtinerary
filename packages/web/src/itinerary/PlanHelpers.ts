@@ -86,7 +86,7 @@ function editEventField(
         return events;
     }
 
-    const result = _.cloneDeep(events);
+    const result = [...events];
 
     result[index][key] = value;
     return result;
