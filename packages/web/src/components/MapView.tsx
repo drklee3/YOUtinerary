@@ -88,7 +88,6 @@ class MapView extends React.Component<MapViewProps, MapViewState> {
                 polyline: new maps.Polyline(polylineOptions),
             };
         }
-        console.log(`Routes:\nbefore:\n${JSON.stringify(route)}`);
         if (!route || !route.routes || route.routes.length === 0) {
             console.log("No route, not creating polyline");
             polyline.setMap(null);

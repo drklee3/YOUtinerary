@@ -157,7 +157,6 @@ export class Plan extends React.Component<{}, State> {
         this.setState({ searchingRoute: true });
 
         const route = await searchRoute(req);
-        console.log("Route fetched:", route);
 
         this.setState({ route, searchingRoute: false });
         console.log(`Routes:\n${JSON.stringify(route)}`);
