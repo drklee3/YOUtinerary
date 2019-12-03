@@ -3,12 +3,39 @@ import { Button, Card, Col, Empty, Icon, Row, Tooltip, Typography } from "antd";
 import * as _ from "lodash";
 import QueueAnim from "rc-queue-anim";
 import React from "react";
-import { DragDropContext, Draggable, DraggableProvided, Droppable, DroppableProvided, DropResult, ResponderProvided } from "react-beautiful-dnd";
+import {
+    DragDropContext,
+    Draggable,
+    DraggableProvided,
+    Droppable,
+    DroppableProvided,
+    DropResult,
+    ResponderProvided,
+} from "react-beautiful-dnd";
 import MapView from "../components/MapView";
 import { searchRoute } from "../itinerary/api";
 import EventData from "../itinerary/EventData";
-import { addEvent, addTutorial, editEvent, editEventDescription, editEventEnd, editEventMapsData, editEventName, editEventStart, editEventUserLocation, getDirectionsRequest, getWayPoints, removeEvent, reorderEvent } from "../itinerary/PlanHelpers";
-import { restoreData, restorePlan, saveData, savePlan } from "../itinerary/store";
+import {
+    addEvent,
+    addTutorial,
+    editEvent,
+    editEventDescription,
+    editEventEnd,
+    editEventMapsData,
+    editEventName,
+    editEventStart,
+    editEventUserLocation,
+    getDirectionsRequest,
+    getWayPoints,
+    removeEvent,
+    reorderEvent,
+} from "../itinerary/PlanHelpers";
+import {
+    restoreData,
+    restorePlan,
+    saveData,
+    savePlan,
+} from "../itinerary/store";
 import Event from "./Event";
 
 const { Title, Text } = Typography;
@@ -114,7 +141,7 @@ export class Plan extends React.Component<{}, State> {
         );
 
         //Replacement array instead of empty array
-        //const arr = [newData];
+        const arr = [tutorialEvent];
 
         if (restoredPlan) {
             console.log("Restored plan from browser");
@@ -125,9 +152,7 @@ export class Plan extends React.Component<{}, State> {
             data: restoredData
                 ? { title: restoredData.title }
                 : { title: "Your Plan" },
-            events: restoredPlan
-                ? restoredPlan
-                : addTutorial(this.state.events),
+            events: restoredPlan ? restoredPlan : arr,
             //events: addEvent(this.state.events),
         });
 
@@ -139,7 +164,9 @@ export class Plan extends React.Component<{}, State> {
         console.log("The EventData is " + tutorialEvent);
         console.log("The EventData id is " + tutorialEvent.id);
         console.log("The EventData name is " + tutorialEvent.name);
-        console.log("The EventData description is " + tutorialEvent.description);
+        console.log(
+            "The EventData description is " + tutorialEvent.description
+        );
         console.log("The Elements in the Array is " + this.state.events);
         console.log("The No. of Elements is " + this.state.events.length);
     }
@@ -364,7 +391,7 @@ export class Plan extends React.Component<{}, State> {
                                 >
                                     <Button
                                         type="primary"
-                                        onClick={this.addTutorial}
+                                        onClick={this.addEvent}
                                     >
                                         Add a new event
                                     </Button>
