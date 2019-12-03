@@ -74,14 +74,23 @@ class MapView extends React.Component<MapViewProps, MapViewState> {
     ): MapViewState | null {
         const { route } = props;
         const { map, maps, polyline } = state;
-
-        if (!route || !route.routes || route.routes.length === 0) {
-            console.log("No route, not creating polyline");
-            return null;
-        }
-
         if (!map || !maps) {
             console.error("map or maps isn't defined");
+            return null;
+        }
+        const polylineOptions = {
+            strokeColor: "#1890ff",
+            map,
+        };
+        if (polyline === undefined) {
+            console.log("Added new polyline for new route:", polyline);
+            return {
+                polyline: new maps.Polyline(polylineOptions),
+            };
+        }
+        if (!route || !route.routes || route.routes.length === 0) {
+            console.log("No route, not creating polyline");
+            polyline.setMap(null);
             return null;
         }
 
@@ -89,24 +98,9 @@ class MapView extends React.Component<MapViewProps, MapViewState> {
             route.routes[0].overview_polyline.points
         );
 
-        const polylineOptions = {
-            path: decodedPolyline,
-            strokeColor: "#1890ff",
-            map,
-        };
-
-        if (polyline === undefined) {
-            console.log("Added new polyline for new route:", polyline);
-            return {
-                polyline: new maps.Polyline(polylineOptions),
-            };
-        }
-
         console.log("Updated existing polyline for new route:", polyline);
-
-        polyline.setOptions(polylineOptions);
+        polyline.setPath(decodedPolyline);
         polyline.setMap(map);
-
         return { polyline };
     }
 
