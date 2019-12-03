@@ -7,7 +7,7 @@ import { DragDropContext, Draggable, DraggableProvided, Droppable, DroppableProv
 import MapView from "../components/MapView";
 import { searchRoute } from "../itinerary/api";
 import EventData from "../itinerary/EventData";
-import { addEvent, editEvent, editEventDescription, editEventEnd, editEventMapsData, editEventName, editEventStart, editEventUserLocation, getDirectionsRequest, getWayPoints, removeEvent, reorderEvent } from "../itinerary/PlanHelpers";
+import { addEvent, addTutorial, editEvent, editEventDescription, editEventEnd, editEventMapsData, editEventName, editEventStart, editEventUserLocation, getDirectionsRequest, getWayPoints, removeEvent, reorderEvent } from "../itinerary/PlanHelpers";
 import { restoreData, restorePlan, saveData, savePlan } from "../itinerary/store";
 import Event from "./Event";
 
@@ -79,7 +79,7 @@ export class Plan extends React.Component<{}, State> {
 
     constructor(props: {}) {
         super(props);
-
+        /*
         const theData = new EventData(
             1,
             "Tutorial Event",
@@ -87,7 +87,11 @@ export class Plan extends React.Component<{}, State> {
             new Date(),
             "This is an example event! You can add or change descriptions and titles by clicking the edit button at the side. + search help when it's implemented, etc. etc."
         );
-        this.state.events.push(theData);
+
+        //const arrData = [theData];
+
+        //addEvent(arrData);
+        addTutorial(this.state.events);
 
         console.log("The EventData is " + theData);
         console.log("The EventData id is " + theData.id);
@@ -95,12 +99,13 @@ export class Plan extends React.Component<{}, State> {
         console.log("The EventData description is " + theData.description);
         console.log("The Elements in the Array is " + this.state.events);
         console.log("The No. of Elements is " + this.state.events.length);
+        */
     }
 
     componentDidMount(): void {
         const restoredData = restoreData();
         const restoredPlan = restorePlan();
-        const newData = new EventData(
+        const tutorialEvent = new EventData(
             1,
             "Tutorial Event",
             new Date(),
@@ -108,7 +113,8 @@ export class Plan extends React.Component<{}, State> {
             "This is an example event! You can add or change descriptions and titles by clicking the edit button at the side. + search help when it's implemented, etc. etc."
         );
 
-        const arr = [newData];
+        //Replacement array instead of empty array
+        //const arr = [newData];
 
         if (restoredPlan) {
             console.log("Restored plan from browser");
@@ -119,7 +125,9 @@ export class Plan extends React.Component<{}, State> {
             data: restoredData
                 ? { title: restoredData.title }
                 : { title: "Your Plan" },
-            events: restoredPlan ? restoredPlan : arr,
+            events: restoredPlan
+                ? restoredPlan
+                : addTutorial(this.state.events),
             //events: addEvent(this.state.events),
         });
 
@@ -128,6 +136,10 @@ export class Plan extends React.Component<{}, State> {
         this.state.events.push(theData);
         */
 
+        console.log("The EventData is " + tutorialEvent);
+        console.log("The EventData id is " + tutorialEvent.id);
+        console.log("The EventData name is " + tutorialEvent.name);
+        console.log("The EventData description is " + tutorialEvent.description);
         console.log("The Elements in the Array is " + this.state.events);
         console.log("The No. of Elements is " + this.state.events.length);
     }
@@ -192,6 +204,12 @@ export class Plan extends React.Component<{}, State> {
     addEvent = (): void => {
         this.setState({
             events: addEvent(this.state.events),
+        });
+    };
+
+    addTutorial = (): void => {
+        this.setState({
+            events: addTutorial(this.state.events),
         });
     };
 
@@ -346,7 +364,7 @@ export class Plan extends React.Component<{}, State> {
                                 >
                                     <Button
                                         type="primary"
-                                        onClick={this.addEvent}
+                                        onClick={this.addTutorial}
                                     >
                                         Add a new event
                                     </Button>

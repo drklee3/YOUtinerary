@@ -23,6 +23,18 @@ export function addEvent(events: EventData[]): EventData[] {
     return [...events, newEvent];
 }
 
+export function addTutorial(events: EventData[]): EventData[] {
+    const newEvent = new EventData(
+        1,
+        "Tutorial Event",
+        new Date(),
+        new Date(),
+        "This is an example event! You can add or change descriptions and titles by clicking the edit button at the side. + search help when it's implemented, etc. etc."
+    );
+
+    return [newEvent];
+}
+
 export function reorderEvent(
     events: EventData[],
     startIndex: number,
