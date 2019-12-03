@@ -28,7 +28,7 @@ export function reorderEvent(
     startIndex: number,
     endIndex: number
 ): EventData[] {
-    const result = _.cloneDeep(events);
+    const result = [...events];
     const [removed] = result.splice(startIndex, 1);
     result.splice(endIndex, 0, removed);
 
@@ -85,7 +85,6 @@ function editEventField(
     }
 
     const result = _.cloneDeep(events);
-
     result[index][key] = value;
     return result;
 }

@@ -159,7 +159,6 @@ export class Plan extends React.Component<{}, State> {
         const route = await searchRoute(req);
 
         this.setState({ route, searchingRoute: false });
-        console.log(`Routes:\n${JSON.stringify(route)}`);
     }
 
     onChangeTitle = (title: string): void => {
