@@ -143,13 +143,13 @@ export class Plan extends React.Component<{}, State> {
             console.log("No waypoint changes, not fetching directions");
             return;
         }
-
         // checks if >= 2
         const req = getDirectionsRequest(currWaypoints);
 
         console.log("Searching route with request:", req);
 
         if (!req) {
+            this.setState({ route: undefined, searchingRoute: false });
             return;
         }
 
@@ -160,6 +160,7 @@ export class Plan extends React.Component<{}, State> {
         console.log("Route fetched:", route);
 
         this.setState({ route, searchingRoute: false });
+        console.log(`Routes:\n${JSON.stringify(route)}`);
     }
 
     onChangeTitle = (title: string): void => {

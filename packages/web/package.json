@@ -5,6 +5,7 @@
   "version": "0.1.0",
   "author": "Derrick Lee <derrick@dlee.dev",
   "dependencies": {
+    "@types/lodash": "^4.14.149",
     "antd": "^3.25.3",
     "axios": "^0.19.0",
     "gatsby": "^2.18.5",
