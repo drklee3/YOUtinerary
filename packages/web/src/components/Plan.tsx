@@ -3,38 +3,12 @@ import { Button, Card, Col, Empty, Icon, Row, Tooltip, Typography } from "antd";
 import * as _ from "lodash";
 import QueueAnim from "rc-queue-anim";
 import React from "react";
-import {
-    DragDropContext,
-    Draggable,
-    DraggableProvided,
-    Droppable,
-    DroppableProvided,
-    DropResult,
-    ResponderProvided,
-} from "react-beautiful-dnd";
+import { DragDropContext, Draggable, DraggableProvided, Droppable, DroppableProvided, DropResult, ResponderProvided } from "react-beautiful-dnd";
 import MapView from "../components/MapView";
 import { searchRoute } from "../itinerary/api";
 import EventData from "../itinerary/EventData";
-import {
-    addEvent,
-    editEvent,
-    editEventDescription,
-    editEventEnd,
-    editEventMapsData,
-    editEventName,
-    editEventStart,
-    editEventUserLocation,
-    getDirectionsRequest,
-    getWayPoints,
-    removeEvent,
-    reorderEvent,
-} from "../itinerary/PlanHelpers";
-import {
-    restoreData,
-    restorePlan,
-    saveData,
-    savePlan,
-} from "../itinerary/store";
+import { addEvent, editEvent, editEventDescription, editEventEnd, editEventMapsData, editEventName, editEventStart, editEventUserLocation, getDirectionsRequest, getWayPoints, removeEvent, reorderEvent } from "../itinerary/PlanHelpers";
+import { restoreData, restorePlan, saveData, savePlan } from "../itinerary/store";
 import Event from "./Event";
 
 const { Title, Text } = Typography;
@@ -105,11 +79,7 @@ export class Plan extends React.Component<{}, State> {
 
     constructor(props: {}) {
         super(props);
-    }
 
-    componentDidMount(): void {
-        const restoredData = restoreData();
-        const restoredPlan = restorePlan();
         const theData = new EventData(
             1,
             "Tutorial Event",
@@ -117,6 +87,28 @@ export class Plan extends React.Component<{}, State> {
             new Date(),
             "This is an example event! You can add or change descriptions and titles by clicking the edit button at the side. + search help when it's implemented, etc. etc."
         );
+        this.state.events.push(theData);
+
+        console.log("The EventData is " + theData);
+        console.log("The EventData id is " + theData.id);
+        console.log("The EventData name is " + theData.name);
+        console.log("The EventData description is " + theData.description);
+        console.log("The Elements in the Array is " + this.state.events);
+        console.log("The No. of Elements is " + this.state.events.length);
+    }
+
+    componentDidMount(): void {
+        const restoredData = restoreData();
+        const restoredPlan = restorePlan();
+        const newData = new EventData(
+            1,
+            "Tutorial Event",
+            new Date(),
+            new Date(),
+            "This is an example event! You can add or change descriptions and titles by clicking the edit button at the side. + search help when it's implemented, etc. etc."
+        );
+
+        const arr = [newData];
 
         if (restoredPlan) {
             console.log("Restored plan from browser");
@@ -127,16 +119,15 @@ export class Plan extends React.Component<{}, State> {
             data: restoredData
                 ? { title: restoredData.title }
                 : { title: "Your Plan" },
-            events: restoredPlan ? restoredPlan : [],
+            events: restoredPlan ? restoredPlan : arr,
             //events: addEvent(this.state.events),
         });
 
-        //Pushes to array
+        /*
+        //Pushes object to array
         this.state.events.push(theData);
-        console.log("The EventData is " + theData);
-        console.log("The EventData id is " + theData.id);
-        console.log("The EventData name is " + theData.name);
-        console.log("The EventData description is " + theData.description);
+        */
+
         console.log("The Elements in the Array is " + this.state.events);
         console.log("The No. of Elements is " + this.state.events.length);
     }
