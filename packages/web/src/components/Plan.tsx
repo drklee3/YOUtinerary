@@ -106,27 +106,6 @@ export class Plan extends React.Component<{}, State> {
 
     constructor(props: {}) {
         super(props);
-        /*
-        const theData = new EventData(
-            1,
-            "Tutorial Event",
-            new Date(),
-            new Date(),
-            "This is an example event! You can add or change descriptions and titles by clicking the edit button at the side. + search help when it's implemented, etc. etc."
-        );
-
-        //const arrData = [theData];
-
-        //addEvent(arrData);
-        addTutorial(this.state.events);
-
-        console.log("The EventData is " + theData);
-        console.log("The EventData id is " + theData.id);
-        console.log("The EventData name is " + theData.name);
-        console.log("The EventData description is " + theData.description);
-        console.log("The Elements in the Array is " + this.state.events);
-        console.log("The No. of Elements is " + this.state.events.length);
-        */
     }
 
     componentDidMount(): void {
@@ -155,11 +134,6 @@ export class Plan extends React.Component<{}, State> {
             events: restoredPlan ? restoredPlan : arr,
             //events: addEvent(this.state.events),
         });
-
-        /*
-        //Pushes object to array
-        this.state.events.push(theData);
-        */
 
         console.log("The EventData is " + tutorialEvent);
         console.log("The EventData id is " + tutorialEvent.id);
