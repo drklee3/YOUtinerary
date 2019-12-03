@@ -112,9 +112,9 @@ export class Plan extends React.Component<{}, State> {
         const restoredPlan = restorePlan();
         const theData = new EventData(
             1,
-            "Tutorial",
-            new Date("1:53"),
-            new Date(Date.now()),
+            "Tutorial Event",
+            new Date(),
+            new Date(),
             "This is an example event! You can add or change descriptions and titles by clicking the edit button at the side. + search help when it's implemented, etc. etc."
         );
 
@@ -127,7 +127,9 @@ export class Plan extends React.Component<{}, State> {
             data: restoredData
                 ? { title: restoredData.title }
                 : { title: "Your Plan" },
-            events: restoredPlan ? restoredPlan : [theData],
+            events: restoredPlan
+                ? restoredPlan
+                : [...this.state.events, theData],
         });
         console.log("The Elements in the Array is" + this.state.events);
         console.log("The No. of Elements is" + this.state.events.length);
