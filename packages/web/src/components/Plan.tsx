@@ -241,6 +241,18 @@ export class Plan extends React.Component<{}, State> {
     };
 
     render(): JSX.Element {
+        let extra;
+        if (this.state.events.length > 0) {
+            extra = (
+                <Tooltip title="Delete all events">
+                    <Icon
+                        type="close-circle"
+                        theme="twoTone"
+                        onClick={this.removeAllEvents}
+                    />
+                </Tooltip>
+            );
+        }
         return (
             <Row
                 type="flex"
@@ -272,15 +284,7 @@ export class Plan extends React.Component<{}, State> {
                                 width: "100%",
                                 minHeight: "100%",
                             }}
-                            extra={
-                                <Tooltip title="Delete all events">
-                                    <Icon
-                                        type="close-circle"
-                                        theme="twoTone"
-                                        onClick={this.removeAllEvents}
-                                    />
-                                </Tooltip>
-                            }
+                            extra={extra}
                         >
                             {this.state.events.length > 0 ? (
                                 <>
@@ -355,7 +359,7 @@ export class Plan extends React.Component<{}, State> {
                         </Card>
                     </div>
                 </Col>
-                <Col xs={24} sm={24} md={24} lg={12}>
+                <Col xs={24} sm={24} md={24} lg={12} style={{ height: "100%" }}>
                     <MapView
                         events={this.state.events}
                         route={this.state.route}
