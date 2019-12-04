@@ -11,6 +11,12 @@ const defaultMapOptions = {
     },
     zoom: 13,
 };
+const mapOptions = {
+    center: {
+        lat: 37.349258,
+        lng: -121.941026,
+    },
+};
 
 const getMapBounds = (
     map: google.maps.Map,
@@ -46,6 +52,8 @@ const getMapBounds = (
         // can't return null so just undefined if null
         return map.getBounds() || undefined;
     }
+    mapOptions.center.lat = bounds.getCenter().lat();
+    mapOptions.center.lng = bounds.getCenter().lng();
 
     return bounds;
 };
@@ -158,6 +166,7 @@ class MapView extends React.Component<MapViewProps, MapViewState> {
                     }}
                     resetBoundsOnResize={true}
                     defaultCenter={defaultMapOptions.center}
+                    center={mapOptions.center}
                     defaultZoom={defaultMapOptions.zoom}
                     yesIWantToUseGoogleMapApiInternals={true}
                     onGoogleApiLoaded={({ map, maps }) =>
