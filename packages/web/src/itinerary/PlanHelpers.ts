@@ -13,6 +13,7 @@ import {
     LatLngLiteral,
     PlaceSearchResult,
 } from "@google/maps";
+import _ from "lodash";
 import EventData from "./EventData";
 
 export function addEvent(events: EventData[]): EventData[] {
@@ -93,7 +94,6 @@ export function editEvent(
     if (index === -1) {
         return events;
     }
-
     const result = [...events];
 
     result[index] = modifiedEvent;
@@ -112,8 +112,7 @@ function editEventField(
         return events;
     }
 
-    const result = [...events];
-
+    const result = _.cloneDeep(events);
     result[index][key] = value;
     return result;
 }

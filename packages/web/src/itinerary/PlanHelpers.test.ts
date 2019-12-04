@@ -83,27 +83,27 @@ describe("plan", () => {
     it("should correctly edit event names", () => {
         const plan = newPlan();
 
-        editEventName(plan, 1, "my name was changed");
+        const test = editEventName(plan, 1, "my name was changed");
 
-        expect(plan[1].name).toBe("my name was changed");
+        expect(test[1].name).toBe("my name was changed");
     });
 
     it("should correctly edit event start", () => {
         const plan = newPlan();
 
         const start = new Date(123456789);
-        editEventStart(plan, 1, start);
+        const test = editEventStart(plan, 1, start);
 
-        expect(plan[1].start).toBe(start);
+        expect(test[1].start).toBe(start);
     });
 
     it("should correctly edit event end", () => {
         const plan = newPlan();
 
         const end = new Date(987654321);
-        editEventStart(plan, 1, end);
+        const test = editEventStart(plan, 1, end);
 
-        expect(plan[1].start).toBe(end);
+        expect(test[1].start).toBe(end);
     });
 
     it("should correctly remove events", () => {
