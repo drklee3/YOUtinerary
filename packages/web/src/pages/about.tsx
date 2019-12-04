@@ -52,6 +52,7 @@ const AboutPage = ({ data }: AboutPageProps): JSX.Element => {
                 changes: u.weeks.reduce(sumChanges),
             };
         });
+        dataJson = dataJson.filter((a: any) => a.author !== undefined);
     } catch (e) {
         console.error("Failed to get GitHub contributors:", e);
         console.error("Data:", data);

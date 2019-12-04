@@ -153,13 +153,13 @@ export class Plan extends React.Component<{}, State> {
             console.log("No waypoint changes, not fetching directions");
             return;
         }
-
         // checks if >= 2
         const req = getDirectionsRequest(currWaypoints);
 
         console.log("Searching route with request:", req);
 
         if (!req) {
+            this.setState({ route: undefined, searchingRoute: false });
             return;
         }
 
@@ -167,7 +167,6 @@ export class Plan extends React.Component<{}, State> {
         this.setState({ searchingRoute: true });
 
         const route = await searchRoute(req);
-        console.log("Route fetched:", route);
 
         this.setState({ route, searchingRoute: false });
     }
@@ -176,7 +175,6 @@ export class Plan extends React.Component<{}, State> {
         this.setState({ data: { title } });
     };
 
-    //TODO: Change event order based on time
     onDragEnd = (result: DropResult, provided: ResponderProvided): void => {
         if (!result.destination) {
             return;
@@ -192,50 +190,60 @@ export class Plan extends React.Component<{}, State> {
     };
 
     addEvent = (): void => {
-        this.setState({
-            events: addEvent(this.state.events),
-        });
+        this.setState((prevState) => ({
+            events: addEvent(prevState.events),
+        }));
     };
 
     editEvent = (modified: EventData): void => {
-        this.setState({ events: editEvent(this.state.events, modified) });
+        this.setState((prevState) => ({
+            events: editEvent(prevState.events, modified),
+        }));
     };
 
     editEventName = (id: number, name: string): void => {
-        this.setState({ events: editEventName(this.state.events, id, name) });
+        this.setState((prevState) => ({
+            events: editEventName(prevState.events, id, name),
+        }));
     };
 
     editEventDescription = (id: number, description: string): void => {
-        this.setState({
-            events: editEventDescription(this.state.events, id, description),
-        });
+        this.setState((prevState) => ({
+            events: editEventDescription(prevState.events, id, description),
+        }));
     };
 
     editEventStart = (id: number, start: Date): void => {
-        this.setState({ events: editEventStart(this.state.events, id, start) });
+        this.setState((prevState) => ({
+            events: editEventStart(prevState.events, id, start),
+        }));
     };
 
     editEventEnd = (id: number, end: Date): void => {
-        this.setState({ events: editEventEnd(this.state.events, id, end) });
+        this.setState((prevState) => ({
+            events: editEventEnd(prevState.events, id, end),
+        }));
     };
 
     editEventUserLocation = (id: number, userLocation: string): void => {
-        this.setState({
-            events: editEventUserLocation(this.state.events, id, userLocation),
-        });
+        this.setState((prevState) => ({
+            events: editEventUserLocation(prevState.events, id, userLocation),
+        }));
     };
 
     editEventMapsData = (
         id: number,
         mapsData?: Partial<PlaceSearchResult>
     ): void => {
-        this.setState({
-            events: editEventMapsData(this.state.events, id, mapsData),
-        });
+        this.setState((prevState) => ({
+            events: editEventMapsData(prevState.events, id, mapsData),
+        }));
     };
 
     removeEvent = (id: number): void => {
-        this.setState({ events: removeEvent(this.state.events, id) });
+        this.setState((prevState) => ({
+            events: removeEvent(prevState.events, id),
+        }));
     };
 
     removeAllEvents = (): void => {
@@ -243,6 +251,18 @@ export class Plan extends React.Component<{}, State> {
     };
 
     render(): JSX.Element {
+        let extra;
+        if (this.state.events.length > 0) {
+            extra = (
+                <Tooltip title="Delete all events">
+                    <Icon
+                        type="close-circle"
+                        theme="twoTone"
+                        onClick={this.removeAllEvents}
+                    />
+                </Tooltip>
+            );
+        }
         return (
             <Row
                 type="flex"
@@ -274,15 +294,7 @@ export class Plan extends React.Component<{}, State> {
                                 width: "100%",
                                 minHeight: "100%",
                             }}
-                            extra={
-                                <Tooltip title="Delete all events">
-                                    <Icon
-                                        type="close-circle"
-                                        theme="twoTone"
-                                        onClick={this.removeAllEvents}
-                                    />
-                                </Tooltip>
-                            }
+                            extra={extra}
                         >
                             {this.state.events.length > 0 ? (
                                 <>
@@ -357,7 +369,7 @@ export class Plan extends React.Component<{}, State> {
                         </Card>
                     </div>
                 </Col>
-                <Col xs={24} sm={24} md={24} lg={12}>
+                <Col xs={24} sm={24} md={24} lg={12} style={{ height: "100%" }}>
                     <MapView
                         events={this.state.events}
                         route={this.state.route}
