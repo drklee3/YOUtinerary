@@ -110,17 +110,27 @@ export class Plan extends React.Component<{}, State> {
     componentDidMount(): void {
         const restoredData = restoreData();
         const restoredPlan = restorePlan();
+        const tutorialEvent = new EventData(
+            1,
+            "Tutorial Event",
+            new Date(),
+            new Date(),
+            "This is an example event! You can rename the event by clicking the edit icons, add a desired location, or input your itinerary times! "
+        );
+
+        //Replacement array instead of empty array
+        const arr = [tutorialEvent];
 
         if (restoredPlan) {
             console.log("Restored plan from browser");
         }
 
-        // if no restored state, use an empty plan and default title
+        // if no restored state, revert to launch tutorial
         this.setState({
             data: restoredData
                 ? { title: restoredData.title }
                 : { title: "Your Plan" },
-            events: restoredPlan ? restoredPlan : [],
+            events: restoredPlan ? restoredPlan : arr,
         });
     }
 
@@ -241,6 +251,18 @@ export class Plan extends React.Component<{}, State> {
     };
 
     render(): JSX.Element {
+        let extra;
+        if (this.state.events.length > 0) {
+            extra = (
+                <Tooltip title="Delete all events">
+                    <Icon
+                        type="close-circle"
+                        theme="twoTone"
+                        onClick={this.removeAllEvents}
+                    />
+                </Tooltip>
+            );
+        }
         return (
             <Row
                 type="flex"
@@ -272,15 +294,7 @@ export class Plan extends React.Component<{}, State> {
                                 width: "100%",
                                 minHeight: "100%",
                             }}
-                            extra={
-                                <Tooltip title="Delete all events">
-                                    <Icon
-                                        type="close-circle"
-                                        theme="twoTone"
-                                        onClick={this.removeAllEvents}
-                                    />
-                                </Tooltip>
-                            }
+                            extra={extra}
                         >
                             {this.state.events.length > 0 ? (
                                 <>
@@ -355,7 +369,7 @@ export class Plan extends React.Component<{}, State> {
                         </Card>
                     </div>
                 </Col>
-                <Col xs={24} sm={24} md={24} lg={12}>
+                <Col xs={24} sm={24} md={24} lg={12} style={{ height: "100%" }}>
                     <MapView
                         events={this.state.events}
                         route={this.state.route}
