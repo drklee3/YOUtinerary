@@ -31,12 +31,11 @@ export function reorderEvent(
     const result = [...events];
     const [removed] = result.splice(startIndex, 1);
     result.splice(endIndex, 0, removed);
-
+    
     // change start/end times based on where event is moved to
     const notMoved = startIndex === endIndex;
     const movedToBeginning = endIndex === 0;
     const movedToEnd = endIndex === result.length - 1;
-    const endID = result[endIndex].id;
     const hourOffset = 1;
 
     if (notMoved) {
@@ -44,20 +43,20 @@ export function reorderEvent(
     } else if (movedToBeginning) {
         const newEnd = result[endIndex + 1].start; // next start
         const newStart = new Date(newEnd.getTime());
-        newStart.setHours(newStart.getHours() - hourOffset); 
-        editEventStart(result, endID, newStart);
-        editEventEnd(result, endID, newEnd);
+        newStart.setHours(newStart.getHours() - hourOffset);
+        result[endIndex].start.setTime(newStart);
+        result[endIndex].end.setTime(newEnd);
     } else if (movedToEnd) {
         const newStart = result[endIndex - 1].end; // previous end
         const newEnd = new Date(newStart.getTime());
-        newEnd.setHours(newEnd.getHours() + hourOffset); 
-        editEventStart(result, endID, newStart);
-        editEventEnd(result, endID, newEnd);
+        newEnd.setHours(newEnd.getHours() + hourOffset);
+        result[endIndex].start.setTime(newStart);
+        result[endIndex].end.setTime(newEnd);
     } else {
-        const newStart = result[endIndex - 1].end // previous end
+        const newStart = result[endIndex - 1].end; // previous end
         const newEnd = result[endIndex + 1].start; // next start
-        editEventStart(result, endID, newStart);
-        editEventEnd(result, endID, newEnd);
+        result[endIndex].start.setTime(newStart);
+        result[endIndex].end.setTime(newEnd);
     }
 
     return result;
