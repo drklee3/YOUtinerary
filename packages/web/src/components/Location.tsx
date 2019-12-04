@@ -68,17 +68,7 @@ export class Location extends React.Component<Props> {
                 ));
             }
 
-            let priceElement;
-            if (mapsData.price_level !== undefined) {
-                priceElement = [...Array(mapsData.price_level)].map((e, i) => (
-                    <Icon
-                        key={i}
-                        type="dollar"
-                        theme="twoTone"
-                        twoToneColor="#00a854"
-                    />
-                ));
-            }
+            const priceLevel = mapsData.price_level || 0;
 
             return (
                 <>
@@ -91,10 +81,11 @@ export class Location extends React.Component<Props> {
                     <Text>
                         {mapsData.rating !== undefined && (
                             <>
-                                {mapsData.rating} {ratingElement} •{" "}
+                                {mapsData.rating} {ratingElement}
                             </>
                         )}
-                        {"$".repeat(mapsData.price_level || 0)}
+                        {priceLevel > 0 &&
+                            ` • ${"$".repeat(mapsData.price_level || 0)}`}
                     </Text>
                 </>
             );
