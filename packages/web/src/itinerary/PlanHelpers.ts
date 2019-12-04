@@ -32,20 +32,33 @@ export function reorderEvent(
     const [removed] = result.splice(startIndex, 1);
     result.splice(endIndex, 0, removed);
 
-    // change order of start/end times
-    const dropDirection = startIndex < endIndex;
-    const beginMove = dropDirection ? startIndex : endIndex;
-    const endMove = dropDirection ? endIndex : startIndex;
-    const tempStart = result[beginMove].start;
-    const tempEnd = result[beginMove].end;
-    for (let eventIndex = beginMove; eventIndex < endMove; eventIndex++) {
-        const nextStart = result[eventIndex + 1].start;
-        const nextEnd = result[eventIndex + 1].end;
-        editEventStart(result, result[eventIndex].id, nextStart);
-        editEventEnd(result, result[eventIndex].id, nextEnd);
+    // change start/end times based on where event is moved to
+    const notMoved = startIndex === endIndex;
+    const movedToBeginning = endIndex === 0;
+    const movedToEnd = endIndex === result.length - 1;
+    const endID = result[endIndex].id;
+    const hourOffset = 1;
+
+    if (notMoved) {
+        // do nothing
+    } else if (movedToBeginning) {
+        const newEnd = result[endIndex + 1].start; // next start
+        const newStart = new Date(newEnd.getTime());
+        newStart.setHours(newStart.getHours() - hourOffset); 
+        editEventStart(result, endID, newStart);
+        editEventEnd(result, endID, newEnd);
+    } else if (movedToEnd) {
+        const newStart = result[endIndex - 1].end; // previous end
+        const newEnd = new Date(newStart.getTime());
+        newEnd.setHours(newEnd.getHours() + hourOffset); 
+        editEventStart(result, endID, newStart);
+        editEventEnd(result, endID, newEnd);
+    } else {
+        const newStart = result[endIndex - 1].end // previous end
+        const newEnd = result[endIndex + 1].start; // next start
+        editEventStart(result, endID, newStart);
+        editEventEnd(result, endID, newEnd);
     }
-    editEventStart(result, result[endMove].id, tempStart);
-    editEventEnd(result, result[endMove].id, tempEnd);
 
     return result;
 }
