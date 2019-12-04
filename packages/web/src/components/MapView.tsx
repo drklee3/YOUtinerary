@@ -12,44 +12,6 @@ const defaultMapOptions = {
     zoom: 13,
 };
 
-const getMapBounds = (
-    map: google.maps.Map,
-    maps: typeof google.maps,
-    events: EventData[]
-): google.maps.LatLngBounds | undefined => {
-    const bounds = new maps.LatLngBounds();
-    let locations = 0;
-
-    events.forEach((event) => {
-        if (!event.mapsData || !event.mapsData.geometry) {
-            return;
-        }
-
-        locations++;
-        bounds.extend(
-            new maps.LatLng(
-                event.mapsData.geometry.location.lat,
-                event.mapsData.geometry.location.lng
-            )
-        );
-    });
-
-    console.log(`Map bounds created with ${locations} locations`);
-
-    if (locations === 1) {
-        return;
-    }
-
-    // fallback to current default bounds
-    if (locations === 0) {
-        // (bounds | null | undefined) || undefined
-        // can't return null so just undefined if null
-        return map.getBounds() || undefined;
-    }
-
-    return bounds;
-};
-
 interface MapViewProps {
     events: EventData[];
     route?: DirectionsResponse;
@@ -59,6 +21,8 @@ interface MapViewState {
     map?: google.maps.Map;
     maps?: typeof google.maps;
     polyline?: google.maps.Polyline;
+    lat?: number;
+    lng?: number;
 }
 
 class MapView extends React.Component<MapViewProps, MapViewState> {
@@ -66,6 +30,8 @@ class MapView extends React.Component<MapViewProps, MapViewState> {
         map: undefined,
         maps: undefined,
         polyline: undefined,
+        lat: 37.349258,
+        lng: -121.941026,
     };
 
     static getDerivedStateFromProps(
@@ -103,13 +69,53 @@ class MapView extends React.Component<MapViewProps, MapViewState> {
         polyline.setMap(map);
         return { polyline };
     }
+    getMapBounds = (
+        map: google.maps.Map,
+        maps: typeof google.maps,
+        events: EventData[]
+    ): google.maps.LatLngBounds | undefined => {
+        const bounds = new maps.LatLngBounds();
+        let locations = 0;
+
+        events.forEach((event) => {
+            if (!event.mapsData || !event.mapsData.geometry) {
+                return;
+            }
+
+            locations++;
+            bounds.extend(
+                new maps.LatLng(
+                    event.mapsData.geometry.location.lat,
+                    event.mapsData.geometry.location.lng
+                )
+            );
+        });
+
+        console.log(`Map bounds created with ${locations} locations`);
+
+        if (locations === 1) {
+            return;
+        }
+
+        // fallback to current default bounds
+        if (locations === 0) {
+            // (bounds | null | undefined) || undefined
+            // can't return null so just undefined if null
+            return map.getBounds() || undefined;
+        }
+        this.setState(() => ({
+            lat: bounds.getCenter().lat(),
+            lng: bounds.getCenter().lng(),
+        }));
+        return bounds;
+    };
 
     handleApiLoaded = (
         map: google.maps.Map,
         maps: typeof google.maps,
         events: EventData[]
     ): void => {
-        const bounds = getMapBounds(map, maps, events);
+        const bounds = this.getMapBounds(map, maps, events);
 
         if (bounds) {
             map.fitBounds(bounds);
@@ -125,7 +131,7 @@ class MapView extends React.Component<MapViewProps, MapViewState> {
     ): void => {
         maps.event.addDomListenerOnce(map, "idle", () => {
             maps.event.addDomListener(window, "resize", () => {
-                const bounds = getMapBounds(map, maps, this.props.events);
+                const bounds = this.getMapBounds(map, maps, this.props.events);
 
                 if (bounds) {
                     map.fitBounds(bounds);
@@ -158,6 +164,7 @@ class MapView extends React.Component<MapViewProps, MapViewState> {
                     }}
                     resetBoundsOnResize={true}
                     defaultCenter={defaultMapOptions.center}
+                    center={{ lat: this.state.lat, lng: this.state.lng }}
                     defaultZoom={defaultMapOptions.zoom}
                     yesIWantToUseGoogleMapApiInternals={true}
                     onGoogleApiLoaded={({ map, maps }) =>
