@@ -17,7 +17,6 @@ import { searchRoute } from "../itinerary/api";
 import EventData from "../itinerary/EventData";
 import {
     addEvent,
-    addTutorial,
     editEvent,
     editEventDescription,
     editEventEnd,
@@ -116,7 +115,7 @@ export class Plan extends React.Component<{}, State> {
             "Tutorial Event",
             new Date(),
             new Date(),
-            "This is an example event! You can add or change descriptions and titles by clicking the edit button at the side. + search help when it's implemented, etc. etc."
+            "This is an example event! You can rename the event by clicking the edit icons, add a desired location, or input your itinerary times! "
         );
 
         //Replacement array instead of empty array
@@ -132,17 +131,7 @@ export class Plan extends React.Component<{}, State> {
                 ? { title: restoredData.title }
                 : { title: "Your Plan" },
             events: restoredPlan ? restoredPlan : arr,
-            //events: addEvent(this.state.events),
         });
-
-        console.log("The EventData is " + tutorialEvent);
-        console.log("The EventData id is " + tutorialEvent.id);
-        console.log("The EventData name is " + tutorialEvent.name);
-        console.log(
-            "The EventData description is " + tutorialEvent.description
-        );
-        console.log("The Elements in the Array is " + this.state.events);
-        console.log("The No. of Elements is " + this.state.events.length);
     }
 
     async componentDidUpdate({}, prevState: State): Promise<void> {
@@ -205,12 +194,6 @@ export class Plan extends React.Component<{}, State> {
     addEvent = (): void => {
         this.setState({
             events: addEvent(this.state.events),
-        });
-    };
-
-    addTutorial = (): void => {
-        this.setState({
-            events: addTutorial(this.state.events),
         });
     };
 
