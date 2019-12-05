@@ -38,7 +38,7 @@ export function reorderEvent(
     const movedToBeginning = endIndex === 0;
     const movedToEnd = endIndex === result.length - 1;
     const hourOffset = 1;
-    console.log('test')
+
     if (notMoved) {
         // do nothing
     } else if (movedToBeginning) {
