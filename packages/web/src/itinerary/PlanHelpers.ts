@@ -38,26 +38,26 @@ export function reorderEvent(
     const movedToBeginning = endIndex === 0;
     const movedToEnd = endIndex === result.length - 1;
     const hourOffset = 1;
-
+    console.log('test')
     if (notMoved) {
         // do nothing
     } else if (movedToBeginning) {
         const newEnd = result[endIndex + 1].start; // next start
         const newStart = new Date(newEnd.getTime());
         newStart.setHours(newStart.getHours() - hourOffset);
-        result[endIndex].start.setTime(newStart);
-        result[endIndex].end.setTime(newEnd);
+        result[endIndex].start.setHours(newStart.getHours());
+        result[endIndex].end.setHours(newEnd.getHours());
     } else if (movedToEnd) {
         const newStart = result[endIndex - 1].end; // previous end
         const newEnd = new Date(newStart.getTime());
         newEnd.setHours(newEnd.getHours() + hourOffset);
-        result[endIndex].start.setTime(newStart);
-        result[endIndex].end.setTime(newEnd);
+        result[endIndex].start.setHours(newStart.getHours());
+        result[endIndex].end.setHours(newEnd.getHours());
     } else {
         const newStart = result[endIndex - 1].end; // previous end
         const newEnd = result[endIndex + 1].start; // next start
-        result[endIndex].start.setTime(newStart);
-        result[endIndex].end.setTime(newEnd);
+        result[endIndex].start.setHours(newStart.getHours());
+        result[endIndex].end.setHours(newEnd.getHours());
     }
 
     return result;
