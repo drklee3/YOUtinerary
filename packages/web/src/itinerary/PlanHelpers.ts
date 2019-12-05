@@ -28,9 +28,37 @@ export function reorderEvent(
     startIndex: number,
     endIndex: number
 ): EventData[] {
+    // change order of index in events array
     const result = [...events];
     const [removed] = result.splice(startIndex, 1);
     result.splice(endIndex, 0, removed);
+    
+    // change start/end times based on where event is moved to
+    const notMoved = startIndex === endIndex;
+    const movedToBeginning = endIndex === 0;
+    const movedToEnd = endIndex === result.length - 1;
+    const hourOffset = 1;
+
+    if (notMoved) {
+        // do nothing
+    } else if (movedToBeginning) {
+        const newEnd = result[endIndex + 1].start; // next start
+        const newStart = new Date(newEnd.getTime());
+        newStart.setHours(newStart.getHours() - hourOffset);
+        result[endIndex].start.setHours(newStart.getHours());
+        result[endIndex].end.setHours(newEnd.getHours());
+    } else if (movedToEnd) {
+        const newStart = result[endIndex - 1].end; // previous end
+        const newEnd = new Date(newStart.getTime());
+        newEnd.setHours(newEnd.getHours() + hourOffset);
+        result[endIndex].start.setHours(newStart.getHours());
+        result[endIndex].end.setHours(newEnd.getHours());
+    } else {
+        const newStart = result[endIndex - 1].end; // previous end
+        const newEnd = result[endIndex + 1].start; // next start
+        result[endIndex].start.setHours(newStart.getHours());
+        result[endIndex].end.setHours(newEnd.getHours());
+    }
 
     return result;
 }
